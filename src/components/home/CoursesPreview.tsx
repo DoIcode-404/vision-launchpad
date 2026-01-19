@@ -1,10 +1,27 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Calculator, Atom, FlaskConical, BookOpen, BrainCircuit, Trophy } from "lucide-react";
+import { ArrowRight, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { collection, getDocs, limit, query } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { getIcon } from "@/lib/icons";
 
-const courses = [
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  grades: string[];
+  category: string;
+  duration?: string;
+  instructor?: string;
+  iconName?: string;
+  features?: string[];
+  batchSize?: string;
+}
+
+const defaultCourses = [
   {
-    icon: Calculator,
+    icon: "Calculator",
     title: "Mathematics",
     grades: "Grade 6-12",
     description: "Build strong foundations in algebra, geometry, calculus and more.",
@@ -12,7 +29,7 @@ const courses = [
     features: ["SEE & NEB Prep", "Problem Solving", "Board Prep"],
   },
   {
-    icon: Atom,
+    icon: "Atom",
     title: "Physics",
     grades: "Grade 11-12",
     description: "Master concepts from mechanics to modern physics with practical examples.",
@@ -20,40 +37,44 @@ const courses = [
     features: ["Concept Building", "Numerical Practice", "IOE/IOM Prep"],
   },
   {
-    icon: FlaskConical,
+    icon: "FlaskConical",
     title: "Chemistry",
     grades: "Grade 11-12",
     description: "From organic to inorganic, understand chemistry through visualization.",
     color: "bg-green-500/10 text-green-600",
     features: ["Organic & Inorganic", "Physical Chemistry", "Lab Concepts"],
   },
-  {
-    icon: BookOpen,
-    title: "Science",
-    grades: "Grade 6-10",
-    description: "Integrated science curriculum covering physics, chemistry and biology.",
-    color: "bg-orange-500/10 text-orange-600",
-    features: ["All Branches", "Practical Focus", "SEE Prep"],
-  },
-  {
-    icon: BrainCircuit,
-    title: "Biology",
-    grades: "Grade 11-12",
-    description: "Deep dive into life sciences from cells to ecosystems.",
-    color: "bg-pink-500/10 text-pink-600",
-    features: ["NEB Complete", "Diagram Mastery", "IOM Focus"],
-  },
-  {
-    icon: Trophy,
-    title: "Entrance Exams",
-    grades: "Grade 10-12",
-    description: "Specialized preparation for IOE, IOM, and other entrance exams.",
-    color: "bg-amber-500/10 text-amber-600",
-    features: ["IOE Entrance", "IOM Entrance", "Bridge Course"],
-  },
 ];
 
 const CoursesPreview = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const q = query(collection(db, "courses"), limit(6));
+        const querySnapshot = await getDocs(q);
+        const coursesData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Course[];
+
+        if (coursesData.length === 0) {
+          setCourses(defaultCourses as any);
+        } else {
+          setCourses(coursesData);
+        }
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        setCourses(defaultCourses as any);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
   return (
     <section className="py-12 md:py-16 px-4 bg-muted/30">
       <div className="container mx-auto">
@@ -65,58 +86,81 @@ const CoursesPreview = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((course, index) => (
-            <div
-              key={course.title}
-              className="card-elevated rounded-2xl p-5 group cursor-pointer"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className={`w-12 h-12 rounded-xl ${course.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
-                <course.icon className="w-6 h-6" />
-              </div>
-              
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="font-heading text-xl font-semibold text-primary">
-                  {course.title}
-                </h3>
-                <span className="text-xs font-medium px-3 py-1 rounded-full bg-secondary/10 text-secondary">
-                  {course.grades}
-                </span>
-              </div>
-              
-              <p className="text-muted-foreground text-sm mb-3">
-                {course.description}
-              </p>
-              
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {course.features.map((feature) => (
-                  <span
-                    key={feature}
-                    className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground"
+        {loading ? (
+          <div className="flex items-center justify-center h-64">
+            <Loader className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : (
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((course, index) => {
+                const IconComponent = course.iconName ? getIcon(course.iconName) : null;
+                const gradeDisplay = course.grades?.join(", ") || "All";
+                
+                return (
+                  <div
+                    key={course.id}
+                    className="card-elevated rounded-2xl p-5 group cursor-pointer"
+                    style={{ animationDelay: `${index * 100}ms` }}
                   >
-                    {feature}
-                  </span>
-                ))}
-              </div>
-              
-              <Link
-                to="/courses"
-                className="inline-flex items-center gap-1 text-sm font-medium text-secondary hover:text-secondary/80 transition-colors"
-              >
-                Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+                    {IconComponent && (
+                      <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                        <IconComponent className="w-6 h-6" />
+                      </div>
+                    )}
+                    
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="font-heading text-xl font-semibold text-primary">
+                        {course.title}
+                      </h3>
+                      <span className="text-xs font-medium px-3 py-1 rounded-full bg-secondary/10 text-secondary">
+                        {gradeDisplay}
+                      </span>
+                    </div>
+                    
+                    <p className="text-muted-foreground text-sm mb-3">
+                      {course.description}
+                    </p>
+                    
+                    {course.features && course.features.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {course.features.map((feature) => (
+                          <span
+                            key={feature}
+                            className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground"
+                          >
+                            {feature}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {course.duration && (
+                      <p className="text-xs text-muted-foreground mb-2">
+                        <strong>Duration:</strong> {course.duration}
+                      </p>
+                    )}
+                    
+                    <Link
+                      to="/courses"
+                      className="inline-flex items-center gap-1 text-sm font-medium text-secondary hover:text-secondary/80 transition-colors"
+                    >
+                      Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
 
-        <div className="text-center mt-8">
-          <Button variant="default" size="lg" asChild>
-            <Link to="/courses" className="flex items-center gap-2">
-              View All Courses <ArrowRight className="w-5 h-5" />
-            </Link>
-          </Button>
-        </div>
+            <div className="text-center mt-8">
+              <Button variant="default" size="lg" asChild>
+                <Link to="/courses" className="flex items-center gap-2">
+                  View All Courses <ArrowRight className="w-5 h-5" />
+                </Link>
+              </Button>
+            </div>
+          </>
+        )}
       </div>
     </section>
   );
