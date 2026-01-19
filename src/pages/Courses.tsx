@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { getIcon } from "@/lib/icons";
 
 // Fallback courses if Firestore is empty
 const defaultCourses = [
@@ -179,6 +180,7 @@ interface Course {
   instructor?: string;
   category: string;
   icon?: React.ComponentType<{ className?: string }>;
+  iconName?: string;
   features?: string[];
   batchSize?: string;
 }
@@ -342,11 +344,17 @@ const Courses = () => {
                       {/* Header with icon and grade badge */}
                       <div className="flex items-start justify-between mb-4">
                         <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
-                          {course.icon ? (
-                            <course.icon className="w-6 h-6 text-secondary" />
-                          ) : (
-                            <BookOpen className="w-6 h-6 text-secondary" />
-                          )}
+                          {(() => {
+                            let IconComponent;
+                            if (course.iconName) {
+                              IconComponent = getIcon(course.iconName);
+                            } else if (course.icon) {
+                              IconComponent = course.icon;
+                            } else {
+                              IconComponent = BookOpen;
+                            }
+                            return <IconComponent className="w-6 h-6 text-secondary" />;
+                          })()}
                         </div>
                         <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-accent/20 text-accent-foreground whitespace-nowrap">
                           Grade{" "}

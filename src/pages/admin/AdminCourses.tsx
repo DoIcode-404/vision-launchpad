@@ -31,6 +31,8 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
+import { IconPicker } from "@/components/IconPicker";
+import { getIcon, getIconDisplayName } from "@/lib/icons";
 
 interface Course {
   id: string;
@@ -42,6 +44,7 @@ interface Course {
   category: string;
   features?: string[];
   batchSize?: string;
+  iconName?: string;
 }
 
 const AdminCourses = () => {
@@ -58,6 +61,7 @@ const AdminCourses = () => {
     category: "Core",
     features: "",
     batchSize: "",
+    iconName: "",
   });
   const { toast } = useToast();
 
@@ -101,6 +105,7 @@ const AdminCourses = () => {
           .map((f) => f.trim())
           .filter((f) => f.length > 0),
         batchSize: formData.batchSize,
+        iconName: formData.iconName,
       };
 
       if (editingCourse) {
@@ -145,8 +150,10 @@ const AdminCourses = () => {
       category: course.category,
       features: (course.features || []).join("\n"),
       batchSize: course.batchSize || "",
+      iconName: course.iconName || "",
     });
     setIsDialogOpen(true);
+  };
   };
 
   const handleDelete = async (id: string) => {
@@ -181,6 +188,7 @@ const AdminCourses = () => {
       category: "Core",
       features: "",
       batchSize: "",
+      iconName: "",
     });
   };
 
@@ -309,6 +317,15 @@ const AdminCourses = () => {
                   }
                   placeholder="e.g., Mathematics"
                   required
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium">Icon</label>
+                <IconPicker
+                  selectedIcon={formData.iconName}
+                  onIconSelect={(iconName) =>
+                    setFormData({ ...formData, iconName })
+                  }
                 />
               </div>
               <div>
