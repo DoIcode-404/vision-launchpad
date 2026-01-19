@@ -40,6 +40,8 @@ interface Course {
   duration: string;
   instructor: string;
   category: string;
+  features?: string[];
+  batchSize?: string;
 }
 
 const AdminCourses = () => {
@@ -54,6 +56,8 @@ const AdminCourses = () => {
     duration: "",
     instructor: "",
     category: "Core",
+    features: "",
+    batchSize: "",
   });
   const { toast } = useToast();
 
@@ -92,6 +96,11 @@ const AdminCourses = () => {
         duration: formData.duration,
         instructor: formData.instructor,
         category: formData.category,
+        features: formData.features
+          .split("\n")
+          .map((f) => f.trim())
+          .filter((f) => f.length > 0),
+        batchSize: formData.batchSize,
       };
 
       if (editingCourse) {
@@ -134,6 +143,8 @@ const AdminCourses = () => {
       duration: course.duration,
       instructor: course.instructor,
       category: course.category,
+      features: (course.features || []).join("\n"),
+      batchSize: course.batchSize || "",
     });
     setIsDialogOpen(true);
   };
@@ -168,6 +179,8 @@ const AdminCourses = () => {
       duration: "",
       instructor: "",
       category: "Core",
+      features: "",
+      batchSize: "",
     });
   };
 
@@ -213,6 +226,7 @@ const AdminCourses = () => {
                   <TableHead>Instructor</TableHead>
                   <TableHead>Grades</TableHead>
                   <TableHead>Duration</TableHead>
+                  <TableHead>Batch Size</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -243,6 +257,7 @@ const AdminCourses = () => {
                       </div>
                     </TableCell>
                     <TableCell>{course.duration}</TableCell>
+                    <TableCell>{course.batchSize || "N/A"}</TableCell>
                     <TableCell>
                       <Badge>{course.category}</Badge>
                     </TableCell>
@@ -357,6 +372,29 @@ const AdminCourses = () => {
                     required
                   />
                 </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium">Batch Size</label>
+                <Input
+                  value={formData.batchSize}
+                  onChange={(e) =>
+                    setFormData({ ...formData, batchSize: e.target.value })
+                  }
+                  placeholder="e.g., 10-15 students"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium">
+                  Features (one per line)
+                </label>
+                <Textarea
+                  value={formData.features}
+                  onChange={(e) =>
+                    setFormData({ ...formData, features: e.target.value })
+                  }
+                  placeholder="SEE & NEB Curriculum&#10;Board Exam Preparation&#10;Weekly Tests & Assessments"
+                  rows={4}
+                />
               </div>
             </div>
             <DialogFooter className="mt-6">

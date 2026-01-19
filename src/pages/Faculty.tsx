@@ -11,7 +11,8 @@ const defaultFaculty = [
     subjects: ["Science", "Agriculture"],
     experience: "5+ Years",
     qualification: "B.Sc. Agriculture, AFU",
-    quote: "Learning from nature teaches us the best lessons for life and science.",
+    quote:
+      "Learning from nature teaches us the best lessons for life and science.",
     initials: "AP",
     color: "bg-green-500",
   },
@@ -21,7 +22,8 @@ const defaultFaculty = [
     subjects: ["Mathematics", "Education"],
     experience: "6+ Years",
     qualification: "M.Ed. Mathematics, TU",
-    quote: "Every student can excel in math with the right approach and practice.",
+    quote:
+      "Every student can excel in math with the right approach and practice.",
     initials: "PB",
     color: "bg-purple-500",
   },
@@ -80,7 +82,7 @@ const Faculty = () => {
               Our Expert Faculty
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Learn from experienced educators who are passionate about teaching 
+              Learn from experienced educators who are passionate about teaching
               and committed to your success.
             </p>
           </div>
@@ -92,20 +94,36 @@ const Faculty = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">2</div>
-              <div className="text-sm text-muted-foreground">Expert Teachers</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">
+                2
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Expert Teachers
+              </div>
             </div>
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">10+</div>
-              <div className="text-sm text-muted-foreground">Years Combined Exp.</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">
+                10+
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Years Combined Exp.
+              </div>
             </div>
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">TU/AFU</div>
-              <div className="text-sm text-muted-foreground">Qualified Faculty</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">
+                TU/AFU
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Qualified Faculty
+              </div>
             </div>
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">100%</div>
-              <div className="text-sm text-muted-foreground">Dedicated Team</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">
+                100%
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Dedicated Team
+              </div>
             </div>
           </div>
         </div>
@@ -121,17 +139,27 @@ const Faculty = () => {
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {facultyData.map((faculty) => {
-                const initials = faculty.initials || faculty.name?.split(' ').map(n => n[0]).join('') || 'NA';
-                const color = faculty.color || 'bg-blue-500';
-                const subjectDisplay = faculty.subject || (faculty.subjects ? faculty.subjects.join(", ") : "N/A");
-                
+                const initials =
+                  faculty.initials ||
+                  faculty.name
+                    ?.split(" ")
+                    .map((n) => n[0])
+                    .join("") ||
+                  "NA";
+                const color = faculty.color || "bg-blue-500";
+                const subjectDisplay =
+                  faculty.subject ||
+                  (faculty.subjects ? faculty.subjects.join(", ") : "N/A");
+
                 return (
                   <div
                     key={faculty.id}
                     className="card-elevated rounded-2xl overflow-hidden group"
                   >
                     {/* Avatar */}
-                    <div className={`h-48 ${color} flex items-center justify-center`}>
+                    <div
+                      className={`h-48 ${color} flex items-center justify-center`}
+                    >
                       <span className="text-5xl font-heading font-bold text-white">
                         {initials}
                       </span>
@@ -141,7 +169,7 @@ const Faculty = () => {
                       <h3 className="font-heading text-lg font-semibold text-primary mb-1">
                         {faculty.name}
                       </h3>
-                      
+
                       <div className="flex items-center gap-4 mb-4">
                         <div className="flex items-center gap-1 text-sm text-secondary">
                           <BookOpen className="w-4 h-4" />
@@ -182,7 +210,7 @@ const Faculty = () => {
               Are You a Passionate Educator?
             </h2>
             <p className="text-muted-foreground mb-6">
-              We're always looking for talented teachers who share our vision of 
+              We're always looking for talented teachers who share our vision of
               providing quality education. Join our team and make a difference.
             </p>
             <a

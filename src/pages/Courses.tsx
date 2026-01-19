@@ -2,7 +2,18 @@ import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Calculator, Atom, FlaskConical, BookOpen, BrainCircuit, Trophy, Clock, Users, CheckCircle, ArrowRight } from "lucide-react";
+import {
+  Calculator,
+  Atom,
+  FlaskConical,
+  BookOpen,
+  BrainCircuit,
+  Trophy,
+  Clock,
+  Users,
+  CheckCircle,
+  ArrowRight,
+} from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -13,7 +24,8 @@ const defaultCourses = [
     icon: Calculator,
     title: "Mathematics",
     grades: ["6", "7", "8", "9", "10", "11", "12"],
-    description: "Build strong foundations in algebra, geometry, trigonometry, calculus and more with our comprehensive math program.",
+    description:
+      "Build strong foundations in algebra, geometry, trigonometry, calculus and more with our comprehensive math program.",
     features: [
       "SEE & NEB Curriculum",
       "Board Exam Preparation",
@@ -31,7 +43,8 @@ const defaultCourses = [
     icon: Atom,
     title: "Physics",
     grades: ["11", "12"],
-    description: "Master concepts from mechanics to modern physics with practical examples, numerical practice, and exam-focused preparation.",
+    description:
+      "Master concepts from mechanics to modern physics with practical examples, numerical practice, and exam-focused preparation.",
     features: [
       "Concept Building & Visualization",
       "Numerical Problem Practice",
@@ -49,7 +62,8 @@ const defaultCourses = [
     icon: FlaskConical,
     title: "Chemistry",
     grades: ["11", "12"],
-    description: "From organic to inorganic, understand chemistry through visualization, reactions mechanisms, and practical applications.",
+    description:
+      "From organic to inorganic, understand chemistry through visualization, reactions mechanisms, and practical applications.",
     features: [
       "Organic Chemistry Mastery",
       "Inorganic Chemistry Shortcuts",
@@ -66,7 +80,8 @@ const defaultCourses = [
     icon: BookOpen,
     title: "Science (Integrated)",
     grades: ["6", "7", "8", "9", "10"],
-    description: "Complete science curriculum covering physics, chemistry, and biology with emphasis on conceptual understanding.",
+    description:
+      "Complete science curriculum covering physics, chemistry, and biology with emphasis on conceptual understanding.",
     features: [
       "All Three Branches Covered",
       "Practical & Theory Balance",
@@ -83,7 +98,8 @@ const defaultCourses = [
     icon: BrainCircuit,
     title: "Biology",
     grades: ["11", "12"],
-    description: "Deep dive into life sciences from cells to ecosystems with visual learning aids and IOM-focused preparation.",
+    description:
+      "Deep dive into life sciences from cells to ecosystems with visual learning aids and IOM-focused preparation.",
     features: [
       "NEB Line-by-Line Coverage",
       "Diagram Mastery Techniques",
@@ -100,7 +116,8 @@ const defaultCourses = [
     icon: Trophy,
     title: "SEE Preparation",
     grades: ["9", "10"],
-    description: "Comprehensive SEE exam preparation covering all core subjects with focus on securing top grades.",
+    description:
+      "Comprehensive SEE exam preparation covering all core subjects with focus on securing top grades.",
     features: [
       "Strong Foundation Building",
       "All Subject Coverage",
@@ -117,7 +134,8 @@ const defaultCourses = [
     icon: Trophy,
     title: "IOE Entrance Prep",
     grades: ["11", "12"],
-    description: "Intensive preparation for IOE Entrance with comprehensive coverage of Physics, Chemistry, and Mathematics.",
+    description:
+      "Intensive preparation for IOE Entrance with comprehensive coverage of Physics, Chemistry, and Mathematics.",
     features: [
       "Complete PCM Syllabus",
       "Previous Year Analysis",
@@ -134,7 +152,8 @@ const defaultCourses = [
     icon: Trophy,
     title: "IOM Entrance Prep",
     grades: ["11", "12"],
-    description: "Comprehensive IOM entrance preparation covering Physics, Chemistry, Biology, and Zoology with focus on high-yield topics.",
+    description:
+      "Comprehensive IOM entrance preparation covering Physics, Chemistry, Biology, and Zoology with focus on high-yield topics.",
     features: [
       "Complete PCB Coverage",
       "NEB Syllabus Emphasis",
@@ -159,7 +178,7 @@ interface Course {
   duration: string;
   instructor?: string;
   category: string;
-  icon?: React.ComponentType<{className?: string}>;
+  icon?: React.ComponentType<{ className?: string }>;
   features?: string[];
   batchSize?: string;
 }
@@ -181,7 +200,7 @@ const Courses = () => {
         id: doc.id,
         ...doc.data(),
       })) as Course[];
-      
+
       if (coursesData.length === 0) {
         setCourses(defaultCourses);
       } else {
@@ -196,15 +215,18 @@ const Courses = () => {
   };
 
   const filteredCourses = courses.filter((course) => {
-    const categoryMatch = selectedCategory === "All" || course.category === selectedCategory;
-    
+    const categoryMatch =
+      selectedCategory === "All" || course.category === selectedCategory;
+
     let gradeMatch = true;
     if (selectedGrade === "6-10") {
-      gradeMatch = course.grades.some((g) => ["6", "7", "8", "9", "10"].includes(g));
+      gradeMatch = course.grades.some((g) =>
+        ["6", "7", "8", "9", "10"].includes(g),
+      );
     } else if (selectedGrade === "11-12") {
       gradeMatch = course.grades.some((g) => ["11", "12"].includes(g));
     }
-    
+
     return categoryMatch && gradeMatch;
   });
 
@@ -229,15 +251,18 @@ const Courses = () => {
               Our Courses
             </h1>
             <p className="text-base md:text-lg text-primary-foreground/80 max-w-2xl mx-auto">
-              Comprehensive curriculum designed to build strong foundations and achieve 
-              academic excellence from Grade 6 to competitive exams.
+              Comprehensive curriculum designed to build strong foundations and
+              achieve academic excellence from Grade 6 to competitive exams.
             </p>
           </div>
         </div>
         {/* Bottom curve divider */}
-        <div className="absolute bottom-0 left-0 right-0 h-6 bg-muted/30" style={{
-          clipPath: "ellipse(70% 100% at 50% 100%)"
-        }} />
+        <div
+          className="absolute bottom-0 left-0 right-0 h-6 bg-muted/30"
+          style={{
+            clipPath: "ellipse(70% 100% at 50% 100%)",
+          }}
+        />
       </section>
 
       {/* Filters - Unified Container */}
@@ -247,7 +272,9 @@ const Courses = () => {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               {/* Category Filters - Left */}
               <div className="flex items-center gap-1.5 flex-wrap justify-center md:justify-start">
-                <span className="text-xs font-medium text-muted-foreground mr-2 hidden sm:block">Category:</span>
+                <span className="text-xs font-medium text-muted-foreground mr-2 hidden sm:block">
+                  Category:
+                </span>
                 {categories.map((category) => (
                   <button
                     key={category}
@@ -262,13 +289,15 @@ const Courses = () => {
                   </button>
                 ))}
               </div>
-              
+
               {/* Divider for mobile */}
               <div className="w-full h-px bg-border/50 md:hidden" />
-              
+
               {/* Grade Filters - Right */}
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-medium text-muted-foreground mr-2 hidden sm:block">Grade:</span>
+                <span className="text-xs font-medium text-muted-foreground mr-2 hidden sm:block">
+                  Grade:
+                </span>
                 {gradeFilters.map((grade) => (
                   <button
                     key={grade}
@@ -299,82 +328,99 @@ const Courses = () => {
             <>
               {/* Results count */}
               <p className="text-sm text-muted-foreground mb-6">
-                Showing {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''}
+                Showing {filteredCourses.length} course
+                {filteredCourses.length !== 1 ? "s" : ""}
               </p>
-              
+
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className="bg-background rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-border/30 flex flex-col h-full"
-              >
-                <div className="p-5 md:p-6 flex flex-col h-full">
-                  {/* Header with icon and grade badge */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
-                      {course.icon ? (
-                        <course.icon className="w-6 h-6 text-secondary" />
-                      ) : (
-                        <BookOpen className="w-6 h-6 text-secondary" />
-                      )}
-                    </div>
-                    <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-accent/20 text-accent-foreground whitespace-nowrap">
-                      Grade {course.grades.length > 3 
-                        ? `${course.grades[0]}-${course.grades[course.grades.length - 1]}` 
-                        : course.grades.join(", ")}
-                    </span>
-                  </div>
-
-                  {/* Title and description */}
-                  <h3 className="font-heading text-lg font-bold text-foreground mb-2">
-                    {course.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                    {course.description}
-                  </p>
-
-                  {/* Meta info */}
-                  <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5" />
-                      {course.duration || "N/A"}
-                    </div>
-                    {course.batchSize && (
-                      <div className="flex items-center gap-1.5">
-                        <Users className="w-3.5 h-3.5" />
-                        {course.batchSize}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Features */}
-                  {course.features && course.features.length > 0 && (
-                    <div className="space-y-1.5 mb-5 flex-grow">
-                      {course.features.slice(0, 3).map((feature) => (
-                        <div key={feature} className="flex items-center gap-2 text-sm">
-                          <CheckCircle className="w-3.5 h-3.5 text-secondary shrink-0" />
-                          <span className="text-muted-foreground text-xs">{feature}</span>
+                  <div
+                    key={course.id}
+                    className="bg-background rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-border/30 flex flex-col h-full"
+                  >
+                    <div className="p-5 md:p-6 flex flex-col h-full">
+                      {/* Header with icon and grade badge */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
+                          {course.icon ? (
+                            <course.icon className="w-6 h-6 text-secondary" />
+                          ) : (
+                            <BookOpen className="w-6 h-6 text-secondary" />
+                          )}
                         </div>
-                      ))}
-                    </div>
-                  )}
+                        <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-accent/20 text-accent-foreground whitespace-nowrap">
+                          Grade{" "}
+                          {course.grades.length > 3
+                            ? `${course.grades[0]}-${course.grades[course.grades.length - 1]}`
+                            : course.grades.join(", ")}
+                        </span>
+                      </div>
 
-                  {/* CTA Button */}
-                  <Button variant="default" size="sm" className="w-full mt-auto" asChild>
-                    <Link to="/contact" className="flex items-center justify-center gap-2">
-                      Enquire Now <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-            ))}
+                      {/* Title and description */}
+                      <h3 className="font-heading text-lg font-bold text-foreground mb-2">
+                        {course.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                        {course.description}
+                      </p>
+
+                      {/* Meta info */}
+                      <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5" />
+                          {course.duration || "N/A"}
+                        </div>
+                        {course.batchSize && (
+                          <div className="flex items-center gap-1.5">
+                            <Users className="w-3.5 h-3.5" />
+                            {course.batchSize}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Features */}
+                      {course.features && course.features.length > 0 && (
+                        <div className="space-y-1.5 mb-5 flex-grow">
+                          {course.features.slice(0, 3).map((feature) => (
+                            <div
+                              key={feature}
+                              className="flex items-center gap-2 text-sm"
+                            >
+                              <CheckCircle className="w-3.5 h-3.5 text-secondary shrink-0" />
+                              <span className="text-muted-foreground text-xs">
+                                {feature}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* CTA Button */}
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="w-full mt-auto"
+                        asChild
+                      >
+                        <Link
+                          to="/contact"
+                          className="flex items-center justify-center gap-2"
+                        >
+                          Enquire Now <ArrowRight className="w-4 h-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {filteredCourses.length === 0 && (
                 <div className="text-center py-12 bg-background rounded-2xl">
-                  <p className="text-muted-foreground">No courses found matching your filters.</p>
-                  <Button 
-                    variant="outline" 
+                  <p className="text-muted-foreground">
+                    No courses found matching your filters.
+                  </p>
+                  <Button
+                    variant="outline"
                     className="mt-4"
                     onClick={() => {
                       setSelectedCategory("All");
