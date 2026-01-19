@@ -322,7 +322,7 @@ const AdminFaculty = () => {
 
       {/* Add/Edit Faculty Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={handleCloseDialog}>
-        <DialogContent className="max-w-2xl">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
               {editingFaculty
@@ -339,7 +339,7 @@ const AdminFaculty = () => {
                 <label className="text-sm font-medium">Profile Image</label>
                 <div className="mt-2">
                   {imagePreview ? (
-                    <div className="relative w-32 h-32 rounded-lg overflow-hidden border-2 border-border">
+                    <div className="relative w-24 h-24 rounded-lg overflow-hidden border-2 border-border">
                       <img
                         src={imagePreview}
                         alt="Preview"
@@ -354,9 +354,9 @@ const AdminFaculty = () => {
                       </button>
                     </div>
                   ) : (
-                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
-                      <Upload className="w-8 h-8 text-muted-foreground mb-2" />
-                      <span className="text-sm text-muted-foreground">
+                    <label className="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                      <Upload className="w-6 h-6 text-muted-foreground mb-1" />
+                      <span className="text-xs text-muted-foreground">
                         Click to upload image
                       </span>
                       <input
