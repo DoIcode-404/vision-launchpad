@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import { 
-  GraduationCap, 
-  Phone, 
-  Mail, 
-  MapPin, 
-  Clock, 
-  Facebook, 
-  Instagram, 
+import {
+  GraduationCap,
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  Facebook,
+  Instagram,
   Youtube,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -52,13 +52,16 @@ const Footer = () => {
                   </p>
                 </div>
               </div>
-              <Button 
-                variant="default" 
-                size="sm" 
+              <Button
+                variant="default"
+                size="sm"
                 className="shrink-0 bg-primary hover:bg-primary/90"
                 asChild
               >
-                <Link to="/contact" className="flex items-center gap-1.5 text-sm">
+                <Link
+                  to="/contact"
+                  className="flex items-center gap-1.5 text-sm"
+                >
                   Book Demo <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
@@ -86,8 +89,9 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              Empowering students for over a decade with quality education, 
-              experienced faculty, and personalized attention for academic excellence.
+              Empowering students for over a decade with quality education,
+              experienced faculty, and personalized attention for academic
+              excellence.
             </p>
             <div className="flex items-center gap-3">
               <a
@@ -116,7 +120,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">Quick Links</h4>
+            <h4 className="font-heading font-semibold text-lg mb-4">
+              Quick Links
+            </h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.path}>
@@ -134,7 +140,9 @@ const Footer = () => {
 
           {/* Courses */}
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">Our Courses</h4>
+            <h4 className="font-heading font-semibold text-lg mb-4">
+              Our Courses
+            </h4>
             <ul className="space-y-3">
               {courses.map((course) => (
                 <li key={course}>
@@ -149,7 +157,9 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-heading font-semibold text-lg mb-4">Contact Us</h4>
+            <h4 className="font-heading font-semibold text-lg mb-4">
+              Contact Us
+            </h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-secondary shrink-0 mt-0.5" />
@@ -192,7 +202,10 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-primary-foreground/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-foreground/60">
-            <p>© {currentYear} The New Vision Tuition Center. All rights reserved.</p>
+            <p>
+              © {currentYear} The New Vision Tuition Center. All rights
+              reserved.
+            </p>
             <div className="flex items-center gap-6">
               <a href="#" className="hover:text-secondary transition-colors">
                 Privacy Policy
@@ -200,6 +213,12 @@ const Footer = () => {
               <a href="#" className="hover:text-secondary transition-colors">
                 Terms of Service
               </a>
+              <Link
+                to="/admin/login"
+                className="hover:text-secondary transition-colors text-xs opacity-75 hover:opacity-100"
+              >
+                Admin
+              </Link>
             </div>
           </div>
         </div>
