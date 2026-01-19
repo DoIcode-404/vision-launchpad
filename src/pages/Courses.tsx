@@ -11,6 +11,7 @@ import {
   Trophy,
   Clock,
   Users,
+  User,
   CheckCircle,
   ArrowRight,
 } from "lucide-react";
@@ -375,7 +376,7 @@ const Courses = () => {
                       </p>
 
                       {/* Meta info */}
-                      <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground flex-wrap">
                         <div className="flex items-center gap-1.5">
                           <Clock className="w-3.5 h-3.5" />
                           {course.duration || "N/A"}
@@ -384,6 +385,12 @@ const Courses = () => {
                           <div className="flex items-center gap-1.5">
                             <Users className="w-3.5 h-3.5" />
                             {course.batchSize}
+                          </div>
+                        )}
+                        {course.instructor && (
+                          <div className="flex items-center gap-1.5">
+                            <User className="w-3.5 h-3.5" />
+                            {course.instructor}
                           </div>
                         )}
                       </div>
