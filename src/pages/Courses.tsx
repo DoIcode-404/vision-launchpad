@@ -276,7 +276,7 @@ const Courses = () => {
       </section>
 
       {/* Filters - Unified Container */}
-      <section className="py-4 bg-muted/30 sticky top-16 z-40 border-b border-border/50">
+      <section className="py-4 bg-muted/30 border-b border-border/50">
         <div className="container mx-auto px-4">
           <div className="bg-background rounded-xl shadow-sm border border-border/50 p-3 md:p-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">

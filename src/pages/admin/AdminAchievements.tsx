@@ -61,7 +61,9 @@ const AdminAchievements = () => {
           id: d.id,
           ...(d.data() as Omit<Achievement, "id">),
         }));
-        setAchievements(data.sort((a, b) => parseInt(b.year) - parseInt(a.year)));
+        setAchievements(
+          data.sort((a, b) => parseInt(b.year) - parseInt(a.year)),
+        );
       } catch (error) {
         console.error("Error fetching achievements:", error);
         toast({
@@ -78,7 +80,7 @@ const AdminAchievements = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!form.year.trim()) {
       toast({
@@ -88,7 +90,12 @@ const AdminAchievements = () => {
       });
       return;
     }
-    if (!form.ioe.trim() || !form.iom.trim() || !form.board90.trim() || !form.boardToppers.trim()) {
+    if (
+      !form.ioe.trim() ||
+      !form.iom.trim() ||
+      !form.board90.trim() ||
+      !form.boardToppers.trim()
+    ) {
       toast({
         title: "Error",
         description: "All fields are required",
@@ -109,7 +116,9 @@ const AdminAchievements = () => {
       if (editing) {
         await updateDoc(doc(db, "achievements", editing.id), payload);
         setAchievements(
-          achievements.map((a) => (a.id === editing.id ? { ...a, ...payload } : a)),
+          achievements.map((a) =>
+            a.id === editing.id ? { ...a, ...payload } : a,
+          ),
         );
         toast({
           title: "Updated",

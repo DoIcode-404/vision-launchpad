@@ -89,7 +89,8 @@ const defaultAchievements: Achievement[] = [
 
 const Results = () => {
   const [toppers, setToppers] = useState<Topper[]>(defaultToppers);
-  const [achievements, setAchievements] = useState<Achievement[]>(defaultAchievements);
+  const [achievements, setAchievements] =
+    useState<Achievement[]>(defaultAchievements);
   const [stats, setStats] = useState({
     ioe: 0,
     iom: 0,
@@ -105,7 +106,7 @@ const Results = () => {
           getDocs(collection(db, "results")),
           getDocs(collection(db, "achievements")),
         ]);
-        
+
         const data: Topper[] = qs.docs.map((d) => ({
           id: d.id,
           ...(d.data() as Omit<Topper, "id">),
@@ -118,7 +119,9 @@ const Results = () => {
           ...(d.data() as Omit<Achievement, "id">),
         }));
         if (achData.length > 0) {
-          setAchievements(achData.sort((a, b) => parseInt(b.year) - parseInt(a.year)));
+          setAchievements(
+            achData.sort((a, b) => parseInt(b.year) - parseInt(a.year)),
+          );
         }
 
         // Compute stats dynamically
