@@ -20,7 +20,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Pencil, Trash2, User } from "lucide-react";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 
@@ -90,8 +97,8 @@ const AdminFaculty = () => {
         await updateDoc(doc(db, "faculty", editingFaculty.id), facultyData);
         setFaculty(
           faculty.map((f) =>
-            f.id === editingFaculty.id ? { ...f, ...facultyData } : f
-          )
+            f.id === editingFaculty.id ? { ...f, ...facultyData } : f,
+          ),
         );
         toast({
           title: "Success",
@@ -131,7 +138,8 @@ const AdminFaculty = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this faculty member?")) return;
+    if (!confirm("Are you sure you want to delete this faculty member?"))
+      return;
 
     try {
       await deleteDoc(doc(db, "faculty", id));
@@ -175,7 +183,9 @@ const AdminFaculty = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Faculty Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Faculty Management
+          </h1>
           <p className="text-gray-600 mt-1">{faculty.length} faculty members</p>
         </div>
         <Button onClick={() => setIsDialogOpen(true)}>
@@ -253,7 +263,9 @@ const AdminFaculty = () => {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              {editingFaculty ? "Edit Faculty Member" : "Add New Faculty Member"}
+              {editingFaculty
+                ? "Edit Faculty Member"
+                : "Add New Faculty Member"}
             </DialogTitle>
             <DialogDescription>
               Fill in the faculty member details below
@@ -334,7 +346,11 @@ const AdminFaculty = () => {
               </div>
             </div>
             <DialogFooter className="mt-6">
-              <Button type="button" variant="outline" onClick={handleCloseDialog}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCloseDialog}
+              >
                 Cancel
               </Button>
               <Button type="submit">

@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Calculator, Atom, FlaskConical, BookOpen, BrainCircuit, Trophy, Clock, Users, CheckCircle, ArrowRight } from "lucide-react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
-const allCourses = [
+// Fallback courses if Firestore is empty
+const defaultCourses = [
   {
-    id: 1,
+    id: "1",
     icon: Calculator,
     title: "Mathematics",
     grades: ["6", "7", "8", "9", "10", "11", "12"],
@@ -21,9 +24,10 @@ const allCourses = [
     duration: "12 months",
     batchSize: "10-15 students",
     category: "Core",
+    instructor: "Expert Faculty",
   },
   {
-    id: 2,
+    id: "2",
     icon: Atom,
     title: "Physics",
     grades: ["11", "12"],
@@ -38,9 +42,10 @@ const allCourses = [
     duration: "12 months",
     batchSize: "10-15 students",
     category: "Science",
+    instructor: "Expert Faculty",
   },
   {
-    id: 3,
+    id: "3",
     icon: FlaskConical,
     title: "Chemistry",
     grades: ["11", "12"],
@@ -57,7 +62,7 @@ const allCourses = [
     category: "Science",
   },
   {
-    id: 4,
+    id: "4",
     icon: BookOpen,
     title: "Science (Integrated)",
     grades: ["6", "7", "8", "9", "10"],
@@ -74,7 +79,7 @@ const allCourses = [
     category: "Core",
   },
   {
-    id: 5,
+    id: "5",
     icon: BrainCircuit,
     title: "Biology",
     grades: ["11", "12"],
@@ -91,7 +96,7 @@ const allCourses = [
     category: "Science",
   },
   {
-    id: 6,
+    id: "6",
     icon: Trophy,
     title: "SEE Preparation",
     grades: ["9", "10"],
@@ -108,7 +113,7 @@ const allCourses = [
     category: "Competitive",
   },
   {
-    id: 7,
+    id: "7",
     icon: Trophy,
     title: "IOE Entrance Prep",
     grades: ["11", "12"],
@@ -125,7 +130,7 @@ const allCourses = [
     category: "Competitive",
   },
   {
-    id: 8,
+    id: "8",
     icon: Trophy,
     title: "IOM Entrance Prep",
     grades: ["11", "12"],
@@ -146,11 +151,51 @@ const allCourses = [
 const categories = ["All", "Core", "Science", "Competitive"];
 const gradeFilters = ["All Grades", "6-10", "11-12"];
 
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  grades: string[];
+  duration: string;
+  instructor?: string;
+  category: string;
+  icon?: React.ComponentType<{className?: string}>;
+  features?: string[];
+  batchSize?: string;
+}
+
 const Courses = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGrade, setSelectedGrade] = useState("All Grades");
 
-  const filteredCourses = allCourses.filter((course) => {
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "courses"));
+      const coursesData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Course[];
+      
+      if (coursesData.length === 0) {
+        setCourses(defaultCourses);
+      } else {
+        setCourses(coursesData);
+      }
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+      setCourses(defaultCourses);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredCourses = courses.filter((course) => {
     const categoryMatch = selectedCategory === "All" || course.category === selectedCategory;
     
     let gradeMatch = true;
@@ -162,6 +207,16 @@ const Courses = () => {
     
     return categoryMatch && gradeMatch;
   });
+
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -236,13 +291,19 @@ const Courses = () => {
       {/* Courses Grid */}
       <section className="py-8 md:py-12 bg-muted/30">
         <div className="container mx-auto px-4">
-          {/* Results count */}
-          <p className="text-sm text-muted-foreground mb-6">
-            Showing {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''}
-          </p>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.map((course) => (
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary"></div>
+            </div>
+          ) : (
+            <>
+              {/* Results count */}
+              <p className="text-sm text-muted-foreground mb-6">
+                Showing {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''}
+              </p>
+              
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredCourses.map((course) => (
               <div
                 key={course.id}
                 className="bg-background rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-border/30 flex flex-col h-full"
@@ -251,7 +312,11 @@ const Courses = () => {
                   {/* Header with icon and grade badge */}
                   <div className="flex items-start justify-between mb-4">
                     <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center">
-                      <course.icon className="w-6 h-6 text-secondary" />
+                      {course.icon ? (
+                        <course.icon className="w-6 h-6 text-secondary" />
+                      ) : (
+                        <BookOpen className="w-6 h-6 text-secondary" />
+                      )}
                     </div>
                     <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-accent/20 text-accent-foreground whitespace-nowrap">
                       Grade {course.grades.length > 3 
@@ -272,23 +337,27 @@ const Courses = () => {
                   <div className="flex items-center gap-4 mb-4 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5" />
-                      {course.duration}
+                      {course.duration || "N/A"}
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <Users className="w-3.5 h-3.5" />
-                      {course.batchSize}
-                    </div>
+                    {course.batchSize && (
+                      <div className="flex items-center gap-1.5">
+                        <Users className="w-3.5 h-3.5" />
+                        {course.batchSize}
+                      </div>
+                    )}
                   </div>
 
                   {/* Features */}
-                  <div className="space-y-1.5 mb-5 flex-grow">
-                    {course.features.slice(0, 3).map((feature) => (
-                      <div key={feature} className="flex items-center gap-2 text-sm">
-                        <CheckCircle className="w-3.5 h-3.5 text-secondary shrink-0" />
-                        <span className="text-muted-foreground text-xs">{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {course.features && course.features.length > 0 && (
+                    <div className="space-y-1.5 mb-5 flex-grow">
+                      {course.features.slice(0, 3).map((feature) => (
+                        <div key={feature} className="flex items-center gap-2 text-sm">
+                          <CheckCircle className="w-3.5 h-3.5 text-secondary shrink-0" />
+                          <span className="text-muted-foreground text-xs">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {/* CTA Button */}
                   <Button variant="default" size="sm" className="w-full mt-auto" asChild>
@@ -299,22 +368,24 @@ const Courses = () => {
                 </div>
               </div>
             ))}
-          </div>
+              </div>
 
-          {filteredCourses.length === 0 && (
-            <div className="text-center py-12 bg-background rounded-2xl">
-              <p className="text-muted-foreground">No courses found matching your filters.</p>
-              <Button 
-                variant="outline" 
-                className="mt-4"
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSelectedGrade("All Grades");
-                }}
-              >
-                Clear Filters
-              </Button>
-            </div>
+              {filteredCourses.length === 0 && (
+                <div className="text-center py-12 bg-background rounded-2xl">
+                  <p className="text-muted-foreground">No courses found matching your filters.</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={() => {
+                      setSelectedCategory("All");
+                      setSelectedGrade("All Grades");
+                    }}
+                  >
+                    Clear Filters
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </section>

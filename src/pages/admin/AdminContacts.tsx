@@ -18,7 +18,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Trash2, Eye, CheckCircle } from "lucide-react";
-import { collection, getDocs, deleteDoc, doc, updateDoc, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -99,7 +107,7 @@ const AdminContacts = () => {
         status: newStatus,
       });
       setContacts(
-        contacts.map((c) => (c.id === id ? { ...c, status: newStatus } : c))
+        contacts.map((c) => (c.id === id ? { ...c, status: newStatus } : c)),
       );
       toast({
         title: "Success",
@@ -145,7 +153,9 @@ const AdminContacts = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Contact Submissions</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Contact Submissions
+          </h1>
           <p className="text-gray-600 mt-1">
             {filteredContacts.length} total submissions
           </p>
@@ -190,7 +200,9 @@ const AdminContacts = () => {
               <TableBody>
                 {filteredContacts.map((contact) => (
                   <TableRow key={contact.id}>
-                    <TableCell className="font-medium">{contact.name}</TableCell>
+                    <TableCell className="font-medium">
+                      {contact.name}
+                    </TableCell>
                     <TableCell>{contact.email}</TableCell>
                     <TableCell>{contact.phone}</TableCell>
                     <TableCell>{contact.studentGrade || "N/A"}</TableCell>
@@ -242,48 +254,70 @@ const AdminContacts = () => {
       </Card>
 
       {/* View Contact Dialog */}
-      <Dialog open={!!selectedContact} onOpenChange={() => setSelectedContact(null)}>
+      <Dialog
+        open={!!selectedContact}
+        onOpenChange={() => setSelectedContact(null)}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Contact Details</DialogTitle>
             <DialogDescription>
               Submitted on{" "}
-              {selectedContact?.createdAt?.toDate?.()?.toLocaleString() || "N/A"}
+              {selectedContact?.createdAt?.toDate?.()?.toLocaleString() ||
+                "N/A"}
             </DialogDescription>
           </DialogHeader>
           {selectedContact && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Name</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Name
+                  </label>
                   <p className="mt-1">{selectedContact.name}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Email</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Email
+                  </label>
                   <p className="mt-1">{selectedContact.email}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-700">Phone</label>
+                  <label className="text-sm font-medium text-gray-700">
+                    Phone
+                  </label>
                   <p className="mt-1">{selectedContact.phone}</p>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">
                     Student Grade
                   </label>
-                  <p className="mt-1">{selectedContact.studentGrade || "N/A"}</p>
+                  <p className="mt-1">
+                    {selectedContact.studentGrade || "N/A"}
+                  </p>
                 </div>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700">Subject</label>
+                <label className="text-sm font-medium text-gray-700">
+                  Subject
+                </label>
                 <p className="mt-1">{selectedContact.subject || "N/A"}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700">Message</label>
-                <p className="mt-1 whitespace-pre-wrap">{selectedContact.message}</p>
+                <label className="text-sm font-medium text-gray-700">
+                  Message
+                </label>
+                <p className="mt-1 whitespace-pre-wrap">
+                  {selectedContact.message}
+                </p>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700">Status</label>
-                <div className="mt-1">{getStatusBadge(selectedContact.status)}</div>
+                <label className="text-sm font-medium text-gray-700">
+                  Status
+                </label>
+                <div className="mt-1">
+                  {getStatusBadge(selectedContact.status)}
+                </div>
               </div>
             </div>
           )}

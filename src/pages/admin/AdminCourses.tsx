@@ -21,7 +21,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Pencil, Trash2 } from "lucide-react";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 
@@ -91,8 +98,8 @@ const AdminCourses = () => {
         await updateDoc(doc(db, "courses", editingCourse.id), courseData);
         setCourses(
           courses.map((c) =>
-            c.id === editingCourse.id ? { ...c, ...courseData } : c
-          )
+            c.id === editingCourse.id ? { ...c, ...courseData } : c,
+          ),
         );
         toast({
           title: "Success",
@@ -176,7 +183,9 @@ const AdminCourses = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Course Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Course Management
+          </h1>
           <p className="text-gray-600 mt-1">{courses.length} total courses</p>
         </div>
         <Button onClick={() => setIsDialogOpen(true)}>
@@ -211,12 +220,18 @@ const AdminCourses = () => {
               <TableBody>
                 {courses.map((course) => (
                   <TableRow key={course.id}>
-                    <TableCell className="font-medium">{course.title}</TableCell>
+                    <TableCell className="font-medium">
+                      {course.title}
+                    </TableCell>
                     <TableCell>{course.instructor}</TableCell>
                     <TableCell>
                       <div className="flex gap-1 flex-wrap">
                         {course.grades.slice(0, 3).map((grade, idx) => (
-                          <Badge key={idx} variant="outline" className="text-xs">
+                          <Badge
+                            key={idx}
+                            variant="outline"
+                            className="text-xs"
+                          >
                             Grade {grade}
                           </Badge>
                         ))}
@@ -345,7 +360,11 @@ const AdminCourses = () => {
               </div>
             </div>
             <DialogFooter className="mt-6">
-              <Button type="button" variant="outline" onClick={handleCloseDialog}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleCloseDialog}
+              >
                 Cancel
               </Button>
               <Button type="submit">

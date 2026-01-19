@@ -3,8 +3,22 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send, CheckCircle } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageCircle,
+  Send,
+  CheckCircle,
+} from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
@@ -67,7 +81,7 @@ const Contact = () => {
   };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -80,8 +94,8 @@ const Contact = () => {
               Contact Us
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Have questions? We'd love to hear from you. Reach out for enquiries, 
-              demo classes, or any information about our programs.
+              Have questions? We'd love to hear from you. Reach out for
+              enquiries, demo classes, or any information about our programs.
             </p>
           </div>
         </div>
@@ -91,18 +105,20 @@ const Contact = () => {
       <section className="py-12 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <a 
+            <a
               href="tel:+9779869637226"
               className="card-elevated rounded-xl p-6 text-center group"
             >
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center group-hover:bg-secondary transition-colors">
                 <Phone className="w-6 h-6 text-secondary group-hover:text-secondary-foreground transition-colors" />
               </div>
-              <h3 className="font-heading font-semibold text-primary mb-1">Call Us</h3>
+              <h3 className="font-heading font-semibold text-primary mb-1">
+                Call Us
+              </h3>
               <p className="text-muted-foreground text-sm">+977 9869637226</p>
             </a>
 
-            <a 
+            <a
               href="https://wa.me/9779869637226"
               target="_blank"
               rel="noopener noreferrer"
@@ -111,27 +127,37 @@ const Contact = () => {
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center group-hover:bg-[#25D366] transition-colors">
                 <MessageCircle className="w-6 h-6 text-secondary group-hover:text-white transition-colors" />
               </div>
-              <h3 className="font-heading font-semibold text-primary mb-1">WhatsApp</h3>
+              <h3 className="font-heading font-semibold text-primary mb-1">
+                WhatsApp
+              </h3>
               <p className="text-muted-foreground text-sm">Quick Response</p>
             </a>
 
-            <a 
+            <a
               href="mailto:info@newvision.edu"
               className="card-elevated rounded-xl p-6 text-center group"
             >
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center group-hover:bg-secondary transition-colors">
                 <Mail className="w-6 h-6 text-secondary group-hover:text-secondary-foreground transition-colors" />
               </div>
-              <h3 className="font-heading font-semibold text-primary mb-1">Email Us</h3>
-              <p className="text-muted-foreground text-sm">info@newvision.edu</p>
+              <h3 className="font-heading font-semibold text-primary mb-1">
+                Email Us
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                info@newvision.edu
+              </p>
             </a>
 
             <div className="card-elevated rounded-xl p-6 text-center">
               <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-secondary/10 flex items-center justify-center">
                 <Clock className="w-6 h-6 text-secondary" />
               </div>
-              <h3 className="font-heading font-semibold text-primary mb-1">Timings</h3>
-              <p className="text-muted-foreground text-sm">Mon-Sat: 8AM - 8PM</p>
+              <h3 className="font-heading font-semibold text-primary mb-1">
+                Timings
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                Mon-Sat: 8AM - 8PM
+              </p>
             </div>
           </div>
         </div>
@@ -159,10 +185,11 @@ const Contact = () => {
                     Thank You!
                   </h3>
                   <p className="text-muted-foreground mb-6">
-                    Your enquiry has been submitted successfully. Our team will contact you shortly.
+                    Your enquiry has been submitted successfully. Our team will
+                    contact you shortly.
                   </p>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     onClick={() => {
                       setIsSubmitted(false);
                       setFormData({
@@ -223,10 +250,12 @@ const Contact = () => {
                       <label className="text-sm font-medium text-foreground mb-1.5 block">
                         Student's Grade *
                       </label>
-                      <Select 
+                      <Select
                         required
                         value={formData.studentGrade}
-                        onValueChange={(value) => handleChange("studentGrade", value)}
+                        onValueChange={(value) =>
+                          handleChange("studentGrade", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select grade" />
@@ -244,19 +273,25 @@ const Contact = () => {
                       <label className="text-sm font-medium text-foreground mb-1.5 block">
                         Subject of Interest
                       </label>
-                      <Select 
+                      <Select
                         value={formData.subject}
-                        onValueChange={(value) => handleChange("subject", value)}
+                        onValueChange={(value) =>
+                          handleChange("subject", value)
+                        }
                       >
                         <SelectTrigger>
                           <SelectValue placeholder="Select subject" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="mathematics">Mathematics</SelectItem>
+                          <SelectItem value="mathematics">
+                            Mathematics
+                          </SelectItem>
                           <SelectItem value="physics">Physics</SelectItem>
                           <SelectItem value="chemistry">Chemistry</SelectItem>
                           <SelectItem value="biology">Biology</SelectItem>
-                          <SelectItem value="science">Science (6-10)</SelectItem>
+                          <SelectItem value="science">
+                            Science (6-10)
+                          </SelectItem>
                           <SelectItem value="ioe">IOE Entrance Prep</SelectItem>
                           <SelectItem value="iom">IOM Entrance Prep</SelectItem>
                         </SelectContent>
@@ -276,10 +311,10 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    variant="hero" 
-                    size="lg" 
+                  <Button
+                    type="submit"
+                    variant="hero"
+                    size="lg"
                     className="w-full"
                     disabled={isSubmitting}
                   >
@@ -326,13 +361,15 @@ const Contact = () => {
                       Our Location
                     </h3>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      Lamhi, Dang<br />
-                      Near Main Chowk, Tulsipur Road<br />
+                      Lamhi, Dang
+                      <br />
+                      Near Main Chowk, Tulsipur Road
+                      <br />
                       Lumbini Province, Nepal
                     </p>
-                    <a 
-                      href="https://maps.google.com" 
-                      target="_blank" 
+                    <a
+                      href="https://maps.google.com"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-secondary hover:text-secondary/80 text-sm font-medium mt-3 transition-colors"
                     >
@@ -350,19 +387,29 @@ const Contact = () => {
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Morning Batch</span>
-                    <span className="font-medium text-foreground">8:00 AM - 10:00 AM</span>
+                    <span className="font-medium text-foreground">
+                      8:00 AM - 10:00 AM
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Afternoon Batch</span>
-                    <span className="font-medium text-foreground">2:00 PM - 4:00 PM</span>
+                    <span className="text-muted-foreground">
+                      Afternoon Batch
+                    </span>
+                    <span className="font-medium text-foreground">
+                      2:00 PM - 4:00 PM
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Evening Batch</span>
-                    <span className="font-medium text-foreground">5:00 PM - 7:00 PM</span>
+                    <span className="font-medium text-foreground">
+                      5:00 PM - 7:00 PM
+                    </span>
                   </div>
                   <div className="flex justify-between pt-3 border-t border-border">
                     <span className="text-muted-foreground">Office Hours</span>
-                    <span className="font-medium text-foreground">8:00 AM - 8:00 PM</span>
+                    <span className="font-medium text-foreground">
+                      8:00 AM - 8:00 PM
+                    </span>
                   </div>
                 </div>
               </div>
