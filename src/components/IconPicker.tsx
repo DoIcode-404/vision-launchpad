@@ -16,7 +16,9 @@ export const IconPicker = ({ selectedIcon, onIconSelect }: IconPickerProps) => {
 
   const filteredIcons = useMemo(() => {
     return ICON_LIST.filter((icon) =>
-      getIconDisplayName(icon).toLowerCase().includes(searchQuery.toLowerCase())
+      getIconDisplayName(icon)
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()),
     );
   }, [searchQuery]);
 
@@ -33,10 +35,14 @@ export const IconPicker = ({ selectedIcon, onIconSelect }: IconPickerProps) => {
           {SelectedIcon ? (
             <>
               <SelectedIcon className="w-5 h-5 text-secondary" />
-              <span className="text-sm">{getIconDisplayName(selectedIcon)}</span>
+              <span className="text-sm">
+                {getIconDisplayName(selectedIcon)}
+              </span>
             </>
           ) : (
-            <span className="text-sm text-muted-foreground">Select an icon...</span>
+            <span className="text-sm text-muted-foreground">
+              Select an icon...
+            </span>
           )}
         </div>
         {selectedIcon && (

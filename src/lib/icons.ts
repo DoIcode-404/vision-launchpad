@@ -41,7 +41,10 @@ import {
 } from "lucide-react";
 
 // Map of icon names to icon components
-export const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+export const ICON_MAP: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   Calculator,
   Atom,
   FlaskConical,

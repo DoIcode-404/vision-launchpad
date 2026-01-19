@@ -353,7 +353,9 @@ const Courses = () => {
                             } else {
                               IconComponent = BookOpen;
                             }
-                            return <IconComponent className="w-6 h-6 text-secondary" />;
+                            return (
+                              <IconComponent className="w-6 h-6 text-secondary" />
+                            );
                           })()}
                         </div>
                         <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-accent/20 text-accent-foreground whitespace-nowrap">

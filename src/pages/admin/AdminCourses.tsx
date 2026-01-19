@@ -154,7 +154,6 @@ const AdminCourses = () => {
     });
     setIsDialogOpen(true);
   };
-  };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this course?")) return;
