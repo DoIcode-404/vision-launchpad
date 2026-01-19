@@ -16,12 +16,13 @@ const AdminAnalytics = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [coursesSnap, facultySnap, resultsSnap, contactsSnap] = await Promise.all([
-          getDocs(collection(db, "courses")),
-          getDocs(collection(db, "faculty")),
-          getDocs(collection(db, "results")),
-          getDocs(collection(db, "contacts")),
-        ]);
+        const [coursesSnap, facultySnap, resultsSnap, contactsSnap] =
+          await Promise.all([
+            getDocs(collection(db, "courses")),
+            getDocs(collection(db, "faculty")),
+            getDocs(collection(db, "results")),
+            getDocs(collection(db, "contacts")),
+          ]);
 
         setStats({
           courses: coursesSnap.size,
@@ -40,15 +41,37 @@ const AdminAnalytics = () => {
   }, []);
 
   const statItems = [
-    { label: "Courses", value: stats.courses, icon: BookOpen, color: "bg-blue-500" },
-    { label: "Faculty Members", value: stats.faculty, icon: Users, color: "bg-green-500" },
-    { label: "Toppers/Results", value: stats.results, icon: Trophy, color: "bg-amber-500" },
-    { label: "Contact Messages", value: stats.contacts, icon: MessageSquare, color: "bg-purple-500" },
+    {
+      label: "Courses",
+      value: stats.courses,
+      icon: BookOpen,
+      color: "bg-blue-500",
+    },
+    {
+      label: "Faculty Members",
+      value: stats.faculty,
+      icon: Users,
+      color: "bg-green-500",
+    },
+    {
+      label: "Toppers/Results",
+      value: stats.results,
+      icon: Trophy,
+      color: "bg-amber-500",
+    },
+    {
+      label: "Contact Messages",
+      value: stats.contacts,
+      icon: MessageSquare,
+      color: "bg-purple-500",
+    },
   ];
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Analytics Dashboard
+        </h1>
         <p className="text-gray-600 mt-1">
           Overview of your tuition center data and content
         </p>
@@ -69,7 +92,9 @@ const AdminAnalytics = () => {
                   <CardContent className="pt-6">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-sm text-muted-foreground">{item.label}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {item.label}
+                        </p>
                         <p className="text-3xl font-bold text-primary mt-2">
                           {item.value}
                         </p>
@@ -100,7 +125,9 @@ const AdminAnalytics = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-blue-500 h-2 rounded-full"
-                        style={{ width: `${Math.min(stats.courses * 20, 100)}%` }}
+                        style={{
+                          width: `${Math.min(stats.courses * 20, 100)}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -112,7 +139,9 @@ const AdminAnalytics = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-green-500 h-2 rounded-full"
-                        style={{ width: `${Math.min(stats.faculty * 20, 100)}%` }}
+                        style={{
+                          width: `${Math.min(stats.faculty * 20, 100)}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -124,7 +153,9 @@ const AdminAnalytics = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-amber-500 h-2 rounded-full"
-                        style={{ width: `${Math.min(stats.results * 20, 100)}%` }}
+                        style={{
+                          width: `${Math.min(stats.results * 20, 100)}%`,
+                        }}
                       />
                     </div>
                   </div>
@@ -139,7 +170,9 @@ const AdminAnalytics = () => {
               <CardContent>
                 <div className="space-y-4">
                   <div className="text-sm">
-                    <p className="text-muted-foreground">Total Contact Messages</p>
+                    <p className="text-muted-foreground">
+                      Total Contact Messages
+                    </p>
                     <p className="text-2xl font-bold text-primary mt-1">
                       {stats.contacts}
                     </p>
@@ -147,8 +180,8 @@ const AdminAnalytics = () => {
                   <div className="pt-4 border-t">
                     <p className="text-xs text-muted-foreground">
                       This dashboard auto-updates with your Firestore data. Add
-                      more courses, faculty, and results to see changes reflected
-                      here.
+                      more courses, faculty, and results to see changes
+                      reflected here.
                     </p>
                   </div>
                 </div>

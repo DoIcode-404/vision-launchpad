@@ -9,6 +9,7 @@ import {
   Users,
   BarChart3,
   Trophy,
+  Award,
   LogOut,
   Menu,
   X,
@@ -45,6 +46,11 @@ const AdminLayout = () => {
       label: "Results",
       icon: Trophy,
       href: "/admin/results",
+    },
+    {
+      label: "Achievements",
+      icon: Award,
+      href: "/admin/achievements",
     },
     {
       label: "Analytics",

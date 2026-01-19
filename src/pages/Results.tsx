@@ -15,6 +15,15 @@ interface Topper {
   color: string;
 }
 
+interface Achievement {
+  id?: string;
+  year: string;
+  ioe: string;
+  iom: string;
+  board90: string;
+  boardToppers: string;
+}
+
 const defaultToppers: Topper[] = [
   {
     id: "1",
@@ -72,7 +81,7 @@ const defaultToppers: Topper[] = [
   },
 ];
 
-const achievements = [
+const defaultAchievements: Achievement[] = [
   { year: "2024", ioe: "12", iom: "8", board90: "35+", boardToppers: "5" },
   { year: "2023", ioe: "8", iom: "5", board90: "28+", boardToppers: "4" },
   { year: "2022", ioe: "5", iom: "2", board90: "20+", boardToppers: "3" },
@@ -80,24 +89,43 @@ const achievements = [
 
 const Results = () => {
   const [toppers, setToppers] = useState<Topper[]>(defaultToppers);
-  const [stats, setStats] = useState({ ioe: 0, iom: 0, success: 0, toppers: 0 });
+  const [achievements, setAchievements] = useState<Achievement[]>(defaultAchievements);
+  const [stats, setStats] = useState({
+    ioe: 0,
+    iom: 0,
+    success: 0,
+    toppers: 0,
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const qs = await getDocs(collection(db, "results"));
+        const [qs, achSnap] = await Promise.all([
+          getDocs(collection(db, "results")),
+          getDocs(collection(db, "achievements")),
+        ]);
+        
         const data: Topper[] = qs.docs.map((d) => ({
           id: d.id,
           ...(d.data() as Omit<Topper, "id">),
         }));
         if (data.length > 0) setToppers(data);
 
+        // Fetch achievements if available
+        const achData: Achievement[] = achSnap.docs.map((d) => ({
+          id: d.id,
+          ...(d.data() as Omit<Achievement, "id">),
+        }));
+        if (achData.length > 0) {
+          setAchievements(achData.sort((a, b) => parseInt(b.year) - parseInt(a.year)));
+        }
+
         // Compute stats dynamically
         const ioeCount = data.filter((r) => r.exam.includes("IOE")).length;
         const iomCount = data.filter((r) => r.exam.includes("IOM")).length;
         const toppersCount = data.length;
-        
+
         setStats({
           ioe: ioeCount || 25,
           iom: iomCount || 15,
@@ -183,49 +211,51 @@ const Results = () => {
             <SkeletonGrid count={6} />
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {toppers.map((topper, index) => (
-              <div
-                key={topper.id}
-                className="card-elevated rounded-2xl p-6 text-center relative overflow-hidden"
-              >
-                {/* Trophy Icon for top 3 */}
-                {index < 3 && (
-                  <div className="absolute top-4 right-4">
-                    <Trophy
-                      className={`w-6 h-6 ${index === 0 ? "text-amber-500" : index === 1 ? "text-gray-400" : "text-amber-700"}`}
-                    />
-                  </div>
-                )}
-
+              {toppers.map((topper, index) => (
                 <div
-                  className={`w-20 h-20 rounded-full ${topper.color} mx-auto mb-4 flex items-center justify-center`}
+                  key={topper.id}
+                  className="card-elevated rounded-2xl p-6 text-center relative overflow-hidden"
                 >
-                  <span className="text-2xl font-heading font-bold text-white">
-                    {topper.initials}
-                  </span>
-                </div>
+                  {/* Trophy Icon for top 3 */}
+                  {index < 3 && (
+                    <div className="absolute top-4 right-4">
+                      <Trophy
+                        className={`w-6 h-6 ${index === 0 ? "text-amber-500" : index === 1 ? "text-gray-400" : "text-amber-700"}`}
+                      />
+                    </div>
+                  )}
 
-                <h3 className="font-heading text-lg font-semibold text-primary mb-1">
-                  {topper.name}
-                </h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  {topper.exam}
-                </p>
-
-                <div className="flex items-center justify-center gap-4">
-                  <div className="flex items-center gap-1 text-secondary">
-                    <Medal className="w-4 h-4" />
-                    <span className="font-semibold text-sm">{topper.rank}</span>
-                  </div>
-                  <div className="flex items-center gap-1 text-accent-foreground">
-                    <Star className="w-4 h-4 fill-accent text-accent" />
-                    <span className="font-semibold text-sm">
-                      {topper.score}
+                  <div
+                    className={`w-20 h-20 rounded-full ${topper.color} mx-auto mb-4 flex items-center justify-center`}
+                  >
+                    <span className="text-2xl font-heading font-bold text-white">
+                      {topper.initials}
                     </span>
                   </div>
+
+                  <h3 className="font-heading text-lg font-semibold text-primary mb-1">
+                    {topper.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {topper.exam}
+                  </p>
+
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="flex items-center gap-1 text-secondary">
+                      <Medal className="w-4 h-4" />
+                      <span className="font-semibold text-sm">
+                        {topper.rank}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-accent-foreground">
+                      <Star className="w-4 h-4 fill-accent text-accent" />
+                      <span className="font-semibold text-sm">
+                        {topper.score}
+                      </span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
             </div>
           )}
         </div>

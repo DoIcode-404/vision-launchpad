@@ -24,6 +24,7 @@ import AdminCourses from "./pages/admin/AdminCourses";
 import AdminFaculty from "./pages/admin/AdminFaculty";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminResults from "@/pages/admin/AdminResults";
+import AdminAchievements from "@/pages/admin/AdminAchievements";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const App = () => (
               <Route path="courses" element={<AdminCourses />} />
               <Route path="faculty" element={<AdminFaculty />} />
               <Route path="results" element={<AdminResults />} />
+              <Route path="achievements" element={<AdminAchievements />} />
               <Route path="analytics" element={<AdminAnalytics />} />
             </Route>
 

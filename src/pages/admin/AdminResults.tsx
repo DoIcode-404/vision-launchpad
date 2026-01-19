@@ -105,25 +105,41 @@ const AdminResults = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validation
     if (!form.name.trim()) {
-      toast({ title: "Error", description: "Student name is required", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Student name is required",
+        variant: "destructive",
+      });
       return;
     }
     if (!form.exam.trim()) {
-      toast({ title: "Error", description: "Exam name is required", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Exam name is required",
+        variant: "destructive",
+      });
       return;
     }
     if (!form.rank.trim()) {
-      toast({ title: "Error", description: "Rank is required", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Rank is required",
+        variant: "destructive",
+      });
       return;
     }
     if (!form.score.trim()) {
-      toast({ title: "Error", description: "Score is required", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Score is required",
+        variant: "destructive",
+      });
       return;
     }
-    
+
     try {
       const payload = {
         name: form.name.trim(),
@@ -250,7 +266,9 @@ const AdminResults = () => {
               <select
                 className="border rounded-md h-10 px-3 md:w-40"
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as "name" | "exam" | "date")}
+                onChange={(e) =>
+                  setSortBy(e.target.value as "name" | "exam" | "date")
+                }
               >
                 <option value="date">Sort by: Date Added</option>
                 <option value="name">Sort by: Name</option>
