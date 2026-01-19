@@ -4,9 +4,9 @@ import { BookOpen, Award, Quote } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-const defaultFaculty = [
+const defaultFaculty: FacultyMember[] = [
   {
-    id: 1,
+    id: "1",
     name: "Mr. Achyut Poudel",
     subjects: ["Science", "Agriculture"],
     experience: "5+ Years",
@@ -17,7 +17,7 @@ const defaultFaculty = [
     color: "bg-green-500",
   },
   {
-    id: 2,
+    id: "2",
     name: "Mrs. Puspa Bastola",
     subjects: ["Mathematics", "Education"],
     experience: "6+ Years",
@@ -41,6 +41,7 @@ interface FacultyMember {
   initials?: string;
   color?: string;
   quote?: string;
+  imageUrl?: string;
 }
 
 const Faculty = () => {
@@ -60,13 +61,13 @@ const Faculty = () => {
       })) as FacultyMember[];
 
       if (data.length === 0) {
-        setFacultyData(defaultFaculty as any);
+        setFacultyData(defaultFaculty);
       } else {
         setFacultyData(data);
       }
     } catch (error) {
       console.error("Error fetching faculty:", error);
-      setFacultyData(defaultFaculty as any);
+      setFacultyData(defaultFaculty);
     } finally {
       setLoading(false);
     }
@@ -156,14 +157,24 @@ const Faculty = () => {
                     key={faculty.id}
                     className="card-elevated rounded-2xl overflow-hidden group"
                   >
-                    {/* Avatar */}
-                    <div
-                      className={`h-48 ${color} flex items-center justify-center`}
-                    >
-                      <span className="text-5xl font-heading font-bold text-white">
-                        {initials}
-                      </span>
-                    </div>
+                    {/* Avatar or Image */}
+                    {faculty.imageUrl ? (
+                      <div className="h-48 overflow-hidden">
+                        <img
+                          src={faculty.imageUrl}
+                          alt={faculty.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    ) : (
+                      <div
+                        className={`h-48 ${color} flex items-center justify-center`}
+                      >
+                        <span className="text-5xl font-heading font-bold text-white">
+                          {initials}
+                        </span>
+                      </div>
+                    )}
 
                     <div className="p-6">
                       <h3 className="font-heading text-lg font-semibold text-primary mb-1">

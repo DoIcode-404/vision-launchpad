@@ -19,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Pencil, Trash2, User } from "lucide-react";
+import { Plus, Pencil, Trash2, User, Upload, X } from "lucide-react";
 import {
   collection,
   getDocs,
@@ -28,7 +28,13 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 
 interface Faculty {
@@ -39,6 +45,8 @@ interface Faculty {
   qualification: string;
   subjects: string[];
   experience: string;
+  imageUrl?: string;
+  quote?: string;
 }
 
 const AdminFaculty = () => {
@@ -53,7 +61,11 @@ const AdminFaculty = () => {
     qualification: "",
     subjects: "",
     experience: "",
+    quote: "",
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -82,8 +94,31 @@ const AdminFaculty = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploading(true);
 
     try {
+      let imageUrl = editingFaculty?.imageUrl || "";
+
+      // Upload image if new file selected
+      if (imageFile) {
+        const timestamp = Date.now();
+        const fileName = `faculty/${timestamp}_${imageFile.name}`;
+        const storageRef = ref(storage, fileName);
+
+        await uploadBytes(storageRef, imageFile);
+        imageUrl = await getDownloadURL(storageRef);
+
+        // Delete old image if updating
+        if (editingFaculty?.imageUrl) {
+          try {
+            const oldImageRef = ref(storage, editingFaculty.imageUrl);
+            await deleteObject(oldImageRef);
+          } catch (error) {
+            console.log("Error deleting old image:", error);
+          }
+        }
+      }
+
       const facultyData = {
         name: formData.name,
         email: formData.email,
@@ -91,6 +126,8 @@ const AdminFaculty = () => {
         qualification: formData.qualification,
         subjects: formData.subjects.split(",").map((s) => s.trim()),
         experience: formData.experience,
+        quote: formData.quote,
+        imageUrl: imageUrl || undefined,
       };
 
       if (editingFaculty) {
@@ -121,6 +158,8 @@ const AdminFaculty = () => {
         description: "Failed to save faculty",
         variant: "destructive",
       });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -133,7 +172,10 @@ const AdminFaculty = () => {
       qualification: member.qualification,
       subjects: member.subjects.join(", "),
       experience: member.experience,
+      quote: member.quote || "",
     });
+    setImagePreview(member.imageUrl || "");
+    setImageFile(null);
     setIsDialogOpen(true);
   };
 
@@ -168,7 +210,27 @@ const AdminFaculty = () => {
       qualification: "",
       subjects: "",
       experience: "",
+      quote: "",
     });
+    setImageFile(null);
+    setImagePreview("");
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setImageFile(null);
+    setImagePreview("");
   };
 
   if (loading) {
@@ -274,6 +336,40 @@ const AdminFaculty = () => {
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
+                <label className="text-sm font-medium">Profile Image</label>
+                <div className="mt-2">
+                  {imagePreview ? (
+                    <div className="relative w-32 h-32 rounded-lg overflow-hidden border-2 border-border">
+                      <img
+                        src={imagePreview}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={removeImage}
+                        className="absolute top-1 right-1 bg-destructive text-destructive-foreground rounded-full p-1 hover:bg-destructive/90"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                      <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+                      <span className="text-sm text-muted-foreground">
+                        Click to upload image
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageChange}
+                      />
+                    </label>
+                  )}
+                </div>
+              </div>
+              <div>
                 <label className="text-sm font-medium">Full Name</label>
                 <Input
                   value={formData.name}
@@ -344,6 +440,17 @@ const AdminFaculty = () => {
                   required
                 />
               </div>
+              <div>
+                <label className="text-sm font-medium">Quote (Optional)</label>
+                <Textarea
+                  value={formData.quote}
+                  onChange={(e) =>
+                    setFormData({ ...formData, quote: e.target.value })
+                  }
+                  placeholder="e.g., Teaching is my passion..."
+                  rows={2}
+                />
+              </div>
             </div>
             <DialogFooter className="mt-6">
               <Button
@@ -353,8 +460,12 @@ const AdminFaculty = () => {
               >
                 Cancel
               </Button>
-              <Button type="submit">
-                {editingFaculty ? "Update Faculty" : "Add Faculty"}
+              <Button type="submit" disabled={uploading}>
+                {uploading
+                  ? "Uploading..."
+                  : editingFaculty
+                    ? "Update Faculty"
+                    : "Add Faculty"}
               </Button>
             </DialogFooter>
           </form>
