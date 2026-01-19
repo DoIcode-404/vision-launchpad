@@ -23,6 +23,7 @@ import AdminContacts from "./pages/admin/AdminContacts";
 import AdminCourses from "./pages/admin/AdminCourses";
 import AdminFaculty from "./pages/admin/AdminFaculty";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
+import AdminResults from "@/pages/admin/AdminResults";
 
 const queryClient = new QueryClient();
 
@@ -56,6 +57,7 @@ const App = () => (
               <Route path="contacts" element={<AdminContacts />} />
               <Route path="courses" element={<AdminCourses />} />
               <Route path="faculty" element={<AdminFaculty />} />
+              <Route path="results" element={<AdminResults />} />
               <Route path="analytics" element={<AdminAnalytics />} />
             </Route>
 

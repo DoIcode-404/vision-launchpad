@@ -3,6 +3,7 @@ import Layout from "@/components/layout/Layout";
 import { BookOpen, Award, Quote } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { SkeletonGrid } from "@/components/SkeletonLoader";
 
 const defaultFaculty: FacultyMember[] = [
   {
@@ -47,6 +48,17 @@ interface FacultyMember {
 const Faculty = () => {
   const [facultyData, setFacultyData] = useState<FacultyMember[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const parseYears = (str: string): number => {
+    const match = str.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
+  };
+
+  const facultyCount = facultyData.length;
+  const combinedYears = facultyData.reduce(
+    (sum, f) => sum + parseYears(f.experience || ""),
+    0,
+  );
 
   useEffect(() => {
     fetchFaculty();
@@ -96,7 +108,7 @@ const Faculty = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
               <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">
-                2
+                {facultyCount}
               </div>
               <div className="text-sm text-muted-foreground">
                 Expert Teachers
@@ -104,7 +116,7 @@ const Faculty = () => {
             </div>
             <div>
               <div className="font-heading text-3xl md:text-4xl font-bold text-secondary">
-                10+
+                {combinedYears > 0 ? `${combinedYears}+` : "0"}
               </div>
               <div className="text-sm text-muted-foreground">
                 Years Combined Exp.
@@ -134,9 +146,7 @@ const Faculty = () => {
       <section className="section-padding bg-background">
         <div className="container mx-auto">
           {loading ? (
-            <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-secondary"></div>
-            </div>
+            <SkeletonGrid count={4} />
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {facultyData.map((faculty) => {

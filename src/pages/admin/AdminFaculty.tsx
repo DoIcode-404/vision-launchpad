@@ -46,6 +46,7 @@ interface Faculty {
   subjects: string[];
   experience: string;
   imageUrl?: string;
+  imagePath?: string;
   quote?: string;
 }
 
@@ -98,6 +99,7 @@ const AdminFaculty = () => {
 
     try {
       let imageUrl = editingFaculty?.imageUrl || "";
+      let imagePath = editingFaculty?.imagePath || "";
 
       // Upload image if new file selected
       if (imageFile) {
@@ -107,11 +109,12 @@ const AdminFaculty = () => {
 
         await uploadBytes(storageRef, imageFile);
         imageUrl = await getDownloadURL(storageRef);
+        imagePath = fileName; // Store the path for future deletion
 
         // Delete old image if updating
-        if (editingFaculty?.imageUrl) {
+        if (editingFaculty?.imagePath) {
           try {
-            const oldImageRef = ref(storage, editingFaculty.imageUrl);
+            const oldImageRef = ref(storage, editingFaculty.imagePath);
             await deleteObject(oldImageRef);
           } catch (error) {
             console.log("Error deleting old image:", error);
@@ -128,6 +131,7 @@ const AdminFaculty = () => {
         experience: formData.experience,
         quote: formData.quote,
         imageUrl: imageUrl || undefined,
+        imagePath: imagePath || undefined,
       };
 
       if (editingFaculty) {

@@ -8,6 +8,7 @@ import {
   BookOpen,
   Users,
   BarChart3,
+  Trophy,
   LogOut,
   Menu,
   X,
@@ -39,6 +40,11 @@ const AdminLayout = () => {
       label: "Faculty",
       icon: Users,
       href: "/admin/faculty",
+    },
+    {
+      label: "Results",
+      icon: Trophy,
+      href: "/admin/results",
     },
     {
       label: "Analytics",

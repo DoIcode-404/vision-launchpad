@@ -18,6 +18,7 @@ import {
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { getIcon } from "@/lib/icons";
+import { SkeletonGrid } from "@/components/SkeletonLoader";
 
 // Fallback courses if Firestore is empty
 const defaultCourses = [
@@ -236,8 +237,14 @@ const Courses = () => {
   if (loading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary" />
+        <div className="section-padding">
+          <div className="container mx-auto">
+            <div className="mb-12 text-center">
+              <div className="h-10 bg-muted rounded w-1/2 mx-auto mb-4 animate-pulse" />
+              <div className="h-4 bg-muted rounded w-2/3 mx-auto animate-pulse" />
+            </div>
+            <SkeletonGrid count={6} />
+          </div>
         </div>
       </Layout>
     );

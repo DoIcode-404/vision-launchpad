@@ -1,9 +1,23 @@
 import Layout from "@/components/layout/Layout";
 import { Trophy, Star, Medal, Award } from "lucide-react";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { SkeletonGrid } from "@/components/SkeletonLoader";
 
-const toppers = [
+interface Topper {
+  id: string;
+  name: string;
+  exam: string;
+  rank: string;
+  score: string;
+  initials: string;
+  color: string;
+}
+
+const defaultToppers: Topper[] = [
   {
-    id: 1,
+    id: "1",
     name: "Bikash Thapa",
     exam: "IOE Entrance 2024",
     rank: "Rank 45",
@@ -12,7 +26,7 @@ const toppers = [
     color: "bg-amber-500",
   },
   {
-    id: 2,
+    id: "2",
     name: "Srijana Sharma",
     exam: "IOM Entrance 2024",
     rank: "Rank 78",
@@ -21,16 +35,16 @@ const toppers = [
     color: "bg-pink-500",
   },
   {
-    id: 3,
+    id: "3",
     name: "Rajan KC",
     exam: "IOE Entrance 2024",
-    rank: "Rank 112",
+    rank: "Top 1%",
     score: "Top 1%",
     initials: "RK",
     color: "bg-blue-500",
   },
   {
-    id: 4,
+    id: "4",
     name: "Sunita Gurung",
     exam: "SEE 2024",
     rank: "District Topper",
@@ -39,7 +53,7 @@ const toppers = [
     color: "bg-green-500",
   },
   {
-    id: 5,
+    id: "5",
     name: "Kamal Poudel",
     exam: "Class 12 NEB",
     rank: "School Topper",
@@ -48,7 +62,7 @@ const toppers = [
     color: "bg-purple-500",
   },
   {
-    id: 6,
+    id: "6",
     name: "Anita Bhandari",
     exam: "SEE 2024",
     rank: "Dang Topper",
@@ -65,6 +79,39 @@ const achievements = [
 ];
 
 const Results = () => {
+  const [toppers, setToppers] = useState<Topper[]>(defaultToppers);
+  const [stats, setStats] = useState({ ioe: 0, iom: 0, success: 0, toppers: 0 });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        const qs = await getDocs(collection(db, "results"));
+        const data: Topper[] = qs.docs.map((d) => ({
+          id: d.id,
+          ...(d.data() as Omit<Topper, "id">),
+        }));
+        if (data.length > 0) setToppers(data);
+
+        // Compute stats dynamically
+        const ioeCount = data.filter((r) => r.exam.includes("IOE")).length;
+        const iomCount = data.filter((r) => r.exam.includes("IOM")).length;
+        const toppersCount = data.length;
+        
+        setStats({
+          ioe: ioeCount || 25,
+          iom: iomCount || 15,
+          success: 92,
+          toppers: toppersCount || 50,
+        });
+      } catch (e) {
+        console.error("Failed to load results:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResults();
+  }, []);
   return (
     <Layout>
       {/* Hero Section */}
@@ -75,8 +122,8 @@ const Results = () => {
               Our Results
             </h1>
             <p className="text-lg text-primary-foreground/80">
-              Celebrating the success of our students who have achieved excellence 
-              in board exams and competitive examinations.
+              Celebrating the success of our students who have achieved
+              excellence in board exams and competitive examinations.
             </p>
           </div>
         </div>
@@ -87,20 +134,36 @@ const Results = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">25+</div>
-              <div className="text-sm text-secondary-foreground/80">IOE Selections</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">
+                {stats.ioe}+
+              </div>
+              <div className="text-sm text-secondary-foreground/80">
+                IOE Selections
+              </div>
             </div>
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">15+</div>
-              <div className="text-sm text-secondary-foreground/80">IOM Selections</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">
+                {stats.iom}+
+              </div>
+              <div className="text-sm text-secondary-foreground/80">
+                IOM Selections
+              </div>
             </div>
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">92%</div>
-              <div className="text-sm text-secondary-foreground/80">First Attempt Success</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">
+                {stats.success}%
+              </div>
+              <div className="text-sm text-secondary-foreground/80">
+                First Attempt Success
+              </div>
             </div>
             <div>
-              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">50+</div>
-              <div className="text-sm text-secondary-foreground/80">SEE & NEB Toppers</div>
+              <div className="font-heading text-3xl md:text-4xl font-bold text-secondary-foreground">
+                {stats.toppers}+
+              </div>
+              <div className="text-sm text-secondary-foreground/80">
+                SEE & NEB Toppers
+              </div>
             </div>
           </div>
         </div>
@@ -116,7 +179,10 @@ const Results = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {loading ? (
+            <SkeletonGrid count={6} />
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {toppers.map((topper, index) => (
               <div
                 key={topper.id}
@@ -125,11 +191,15 @@ const Results = () => {
                 {/* Trophy Icon for top 3 */}
                 {index < 3 && (
                   <div className="absolute top-4 right-4">
-                    <Trophy className={`w-6 h-6 ${index === 0 ? 'text-amber-500' : index === 1 ? 'text-gray-400' : 'text-amber-700'}`} />
+                    <Trophy
+                      className={`w-6 h-6 ${index === 0 ? "text-amber-500" : index === 1 ? "text-gray-400" : "text-amber-700"}`}
+                    />
                   </div>
                 )}
 
-                <div className={`w-20 h-20 rounded-full ${topper.color} mx-auto mb-4 flex items-center justify-center`}>
+                <div
+                  className={`w-20 h-20 rounded-full ${topper.color} mx-auto mb-4 flex items-center justify-center`}
+                >
                   <span className="text-2xl font-heading font-bold text-white">
                     {topper.initials}
                   </span>
@@ -138,7 +208,9 @@ const Results = () => {
                 <h3 className="font-heading text-lg font-semibold text-primary mb-1">
                   {topper.name}
                 </h3>
-                <p className="text-sm text-muted-foreground mb-4">{topper.exam}</p>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {topper.exam}
+                </p>
 
                 <div className="flex items-center justify-center gap-4">
                   <div className="flex items-center gap-1 text-secondary">
@@ -147,12 +219,15 @@ const Results = () => {
                   </div>
                   <div className="flex items-center gap-1 text-accent-foreground">
                     <Star className="w-4 h-4 fill-accent text-accent" />
-                    <span className="font-semibold text-sm">{topper.score}</span>
+                    <span className="font-semibold text-sm">
+                      {topper.score}
+                    </span>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -171,20 +246,41 @@ const Results = () => {
               <thead className="bg-primary text-primary-foreground">
                 <tr>
                   <th className="px-6 py-4 text-left font-heading">Year</th>
-                  <th className="px-6 py-4 text-center font-heading">IOE Selections</th>
-                  <th className="px-6 py-4 text-center font-heading">IOM Selections</th>
-                  <th className="px-6 py-4 text-center font-heading">90%+ in Boards</th>
-                  <th className="px-6 py-4 text-center font-heading">School Toppers</th>
+                  <th className="px-6 py-4 text-center font-heading">
+                    IOE Selections
+                  </th>
+                  <th className="px-6 py-4 text-center font-heading">
+                    IOM Selections
+                  </th>
+                  <th className="px-6 py-4 text-center font-heading">
+                    90%+ in Boards
+                  </th>
+                  <th className="px-6 py-4 text-center font-heading">
+                    School Toppers
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {achievements.map((row, index) => (
-                  <tr key={row.year} className={index % 2 === 0 ? "bg-card" : "bg-muted/30"}>
-                    <td className="px-6 py-4 font-semibold text-primary">{row.year}</td>
-                    <td className="px-6 py-4 text-center text-secondary font-semibold">{row.ioe}</td>
-                    <td className="px-6 py-4 text-center text-secondary font-semibold">{row.iom}</td>
-                    <td className="px-6 py-4 text-center text-secondary font-semibold">{row.board90}</td>
-                    <td className="px-6 py-4 text-center text-secondary font-semibold">{row.boardToppers}</td>
+                  <tr
+                    key={row.year}
+                    className={index % 2 === 0 ? "bg-card" : "bg-muted/30"}
+                  >
+                    <td className="px-6 py-4 font-semibold text-primary">
+                      {row.year}
+                    </td>
+                    <td className="px-6 py-4 text-center text-secondary font-semibold">
+                      {row.ioe}
+                    </td>
+                    <td className="px-6 py-4 text-center text-secondary font-semibold">
+                      {row.iom}
+                    </td>
+                    <td className="px-6 py-4 text-center text-secondary font-semibold">
+                      {row.board90}
+                    </td>
+                    <td className="px-6 py-4 text-center text-secondary font-semibold">
+                      {row.boardToppers}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -202,14 +298,21 @@ const Results = () => {
               Recognized for Excellence
             </h2>
             <p className="text-muted-foreground mb-8">
-              The New Vision Tuition Center has been recognized by various educational 
-              bodies for its outstanding contribution to student success. Our consistent 
-              track record of producing top rankers has made us a trusted name in education.
+              The New Vision Tuition Center has been recognized by various
+              educational bodies for its outstanding contribution to student
+              success. Our consistent track record of producing top rankers has
+              made us a trusted name in education.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
-              <span className="px-4 py-2 bg-muted rounded-full text-sm font-medium">Best Coaching Institute 2023</span>
-              <span className="px-4 py-2 bg-muted rounded-full text-sm font-medium">Excellence in Education Award</span>
-              <span className="px-4 py-2 bg-muted rounded-full text-sm font-medium">Top in Dang District</span>
+              <span className="px-4 py-2 bg-muted rounded-full text-sm font-medium">
+                Best Coaching Institute 2023
+              </span>
+              <span className="px-4 py-2 bg-muted rounded-full text-sm font-medium">
+                Excellence in Education Award
+              </span>
+              <span className="px-4 py-2 bg-muted rounded-full text-sm font-medium">
+                Top in Dang District
+              </span>
             </div>
           </div>
         </div>
