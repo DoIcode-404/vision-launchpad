@@ -1,108 +1,65 @@
-# The New Vision Tuition Center - Admin Dashboard & Website
+# The New Vision Tuition Center
 
-A comprehensive full-stack web application for managing a tuition center with a public website and secure admin panel. Built with React, TypeScript, Firebase, and Tailwind CSS.
+A full-stack web application for managing a tuition center with a public-facing website and secure admin dashboard. Built with modern technologies for performance and scalability.
 
-**Live Demo**: https://vision-launchpad.vercel.app  
-**Repository**: https://github.com/DoIcode-404/vision-launchpad
+## Features
 
----
+### Public Website
 
-## 📋 Features
+- **Home**: Hero section, course previews, statistics, and testimonials
+- **Courses**: Browse courses with filters (category & grades)
+- **Faculty**: Meet instructors with photos, qualifications, and experience
+- **Results**: Student achievements and year-wise performance
+- **Contact**: Contact form with Firebase integration
+- **Responsive**: Fully optimized for mobile, tablet, and desktop
 
-### 🌐 Public Website
+### Admin Dashboard
 
-- **Home Page** - Hero section with course preview, stats, and testimonials
-- **Courses Page** - Browse all courses with filters (category & grades)
-- **Faculty Page** - Meet your instructors with images, quotes, and experience
-- **Results Page** - View student achievements with year-wise performance
-- **Contact Page** - Get in touch with the tuition center
-- **Responsive Design** - Fully optimized for mobile, tablet, and desktop
+- **Authentication**: Secure Firebase email/password login
+- **Course Management**: Add, edit, delete courses with icons and features
+- **Faculty Management**: Manage faculty profiles with image uploads
+- **Results Management**: Track student achievements with search and sorting
+- **Achievements**: Manage year-wise performance statistics
+- **Analytics**: Real-time dashboard with key metrics
+- **Contact Messages**: View and manage inquiries from contact form
 
-### 🔐 Admin Dashboard
+## Tech Stack
 
-- **Authentication** - Secure Firebase-based login with email/password
-- **Course Management** - Add, edit, delete courses with icons and features
-- **Faculty Management** - Manage faculty with image uploads and quotes
-- **Results Management** - Track student achievements with search & sorting
-- **Achievements Management** - Manage year-wise performance data
-- **Analytics Dashboard** - View real-time statistics and metrics
-- **Contact Messages** - View inquiries from the contact form
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, Shadcn UI
+- **Backend**: Firebase (Authentication, Firestore, Storage)
+- **Routing**: React Router
+- **Icons**: Lucide React
 
-### 💾 Data Management
-
-- **Firestore Database** - Cloud-based data storage with real-time sync
-- **Firebase Storage** - Secure image hosting for faculty photos
-- **Dynamic Content** - All public pages fetch live data from Firestore
-
----
-
-## 🛠 Tech Stack
-
-| Technology       | Purpose                            |
-| ---------------- | ---------------------------------- |
-| **React 18**     | Frontend framework                 |
-| **TypeScript**   | Type-safe JavaScript               |
-| **Vite**         | Build tool & dev server            |
-| **Tailwind CSS** | Utility-first styling              |
-| **Shadcn UI**    | Pre-built UI components            |
-| **Firebase**     | Authentication, Firestore, Storage |
-| **React Router** | Client-side routing                |
-| **Lucide React** | Icon library                       |
-
----
-
-## 📦 Installation & Setup
+## Installation
 
 ### Prerequisites
 
-- Node.js 16+ (install with [nvm](https://github.com/nvm-sh/nvm))
-- npm or yarn package manager
-- Firebase project (for backend)
+- Node.js 16+
+- npm or yarn
+- Firebase project
 
-### Local Development
+### Setup
 
 ```sh
-# Clone the repository
+# Clone repository
 git clone https://github.com/DoIcode-404/vision-launchpad.git
-
-# Navigate to project
 cd vision-launchpad
 
 # Install dependencies
 npm install
 
-# Create .env.local file with Firebase credentials
-# (Ask the developer for the credentials)
+# Create .env.local with Firebase credentials (see below)
 
 # Start development server
 npm run dev
-
-# Open http://localhost:5173 in your browser
 ```
 
-### Production Build
+### Environment Variables
 
-```sh
-# Build for production
-npm run build
+Create a `.env.local` file in the root directory:
 
-# Preview production build
-npm run preview
-```
-
----
-
-## 🔧 Configuration
-
-### Firebase Setup
-
-1. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
-2. Enable Authentication (Email/Password)
-3. Create Firestore database
-4. Enable Cloud Storage
-5. Copy credentials to `.env.local`:
-
-```
+```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id
@@ -111,50 +68,39 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
 ```
 
----
+## Firebase Setup
 
-## 📂 Project Structure
+1. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
+2. Enable **Authentication** (Email/Password provider)
+3. Create **Firestore Database**
+4. Enable **Cloud Storage**
+5. Add admin user in Authentication → Users
+6. Copy credentials to `.env.local`
+
+## Project Structure
 
 ```
 src/
-├── pages/
-│   ├── Index.tsx                 # Home page
-│   ├── Courses.tsx               # Courses listing
-│   ├── Faculty.tsx               # Faculty page
-│   ├── Results.tsx               # Results/achievements
-│   ├── Contact.tsx               # Contact form
-│   ├── About.tsx                 # About page
-│   └── admin/
-│       ├── AdminLogin.tsx        # Admin login
-│       ├── AdminDashboard.tsx    # Admin home
-│       ├── AdminCourses.tsx      # Course management
-│       ├── AdminFaculty.tsx      # Faculty management
-│       ├── AdminResults.tsx      # Results management
-│       ├── AdminAchievements.tsx # Achievements management
-│       ├── AdminContacts.tsx     # Contact messages
-│       └── AdminAnalytics.tsx    # Analytics dashboard
+├── pages/              # Route pages (Index, Courses, Faculty, etc.)
+│   └── admin/          # Admin dashboard pages
 ├── components/
-│   ├── home/                     # Home page components
-│   ├── layout/                   # Layout components
-│   └── ui/                       # Shadcn UI components
+│   ├── home/           # Home page sections
+│   ├── layout/         # Navbar, Footer, Layout
+│   └── ui/             # Shadcn UI components
 ├── lib/
-│   ├── firebase.ts               # Firebase config
-│   └── icons.ts                  # Icon mapping
+│   ├── firebase.ts     # Firebase configuration
+│   └── icons.ts        # Icon mappings
 ├── contexts/
-│   └── AdminContext.tsx          # Auth & admin context
-└── hooks/
-    └── use-toast.ts             # Toast notifications
+│   └── AdminContext.tsx # Authentication context
+└── hooks/              # Custom React hooks
 ```
 
----
+## Firestore Collections
 
-## 🗄 Firestore Collections
-
-### `courses`
+### courses
 
 ```json
 {
-  "id": "auto-generated",
   "title": "Mathematics",
   "description": "Course description",
   "category": "Core",
@@ -167,11 +113,10 @@ src/
 }
 ```
 
-### `faculty`
+### faculty
 
 ```json
 {
-  "id": "auto-generated",
   "name": "Mr. John Doe",
   "email": "john@example.com",
   "phone": "+977-98XXXXXXXX",
@@ -179,30 +124,27 @@ src/
   "subjects": ["Mathematics", "Physics"],
   "experience": "5 years",
   "imageUrl": "firebase-storage-url",
-  "imagePath": "faculty/timestamp_filename",
   "quote": "Teaching is my passion"
 }
 ```
 
-### `results`
+### results
 
 ```json
 {
-  "id": "auto-generated",
-  "name": "Bikash Thapa",
+  "name": "Student Name",
   "exam": "IOE Entrance 2024",
   "rank": "Rank 45",
   "score": "98.5%",
-  "initials": "BT",
+  "initials": "SN",
   "color": "bg-amber-500"
 }
 ```
 
-### `achievements`
+### achievements
 
 ```json
 {
-  "id": "auto-generated",
   "year": "2024",
   "ioe": "12",
   "iom": "8",
@@ -211,176 +153,55 @@ src/
 }
 ```
 
-### `contacts`
+### contacts
 
 ```json
 {
-  "id": "auto-generated",
   "name": "Student Name",
   "email": "student@email.com",
-  "message": "Inquiry message",
   "phone": "+977-98XXXXXXXX",
+  "message": "Inquiry message",
   "timestamp": "2024-01-19T10:30:00Z"
 }
 ```
 
----
+## Admin Access
 
-## 🔐 Admin Login
+**URL**: `/admin/login`
 
-**URL**: `https://yourdomain.com/admin/login`
+Create admin users in Firebase Console → Authentication → Users
 
-### Creating Admin Users
+## Deployment
 
-1. Go to [Firebase Console](https://console.firebase.google.com)
-2. Select your project
-3. Go to **Authentication** → **Users**
-4. Click **Add user**
-5. Enter email and password
-
-**Default Credentials** (provided by developer)
-
-- Email: `admin@newvision.edu`
-- Password: [Secure password]
-
----
-
-## 🚀 Deployment
-
-### Deploy to Vercel (Recommended)
+### Vercel (Recommended)
 
 ```sh
-# Install Vercel CLI
 npm i -g vercel
-
-# Deploy
 vercel
-
-# Set environment variables in Vercel dashboard
 ```
 
-### Deploy to Netlify
+### Netlify
 
 ```sh
-# Build locally
 npm run build
-
-# Deploy dist folder to Netlify
+# Deploy dist/ folder
 ```
 
-### Environment Variables for Production
+**Important**: Set environment variables in your hosting provider dashboard.
 
-Set these in your hosting provider:
-
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_STORAGE_BUCKET`
-- `VITE_FIREBASE_MESSAGING_SENDER_ID`
-- `VITE_FIREBASE_APP_ID`
-
----
-
-## 📊 Key Features in Detail
-
-### Dynamic Content Loading
-
-- All public pages fetch live data from Firestore
-- Fallback to default data if collection is empty
-- Real-time updates when admin makes changes
-
-### Responsive Design
-
-- Mobile-first approach
-- Fully responsive on all screen sizes
-- Touch-friendly interface
-
-### Security
-
-- Firebase Authentication for admin access
-- Email/password login system
-- Protected admin routes
-- Secure image storage in Firebase Storage
-
-### Performance
-
-- Optimized image loading
-- Skeleton loaders for better UX
-- Efficient database queries
-- Lazy loading of components
-
----
-
-## 🐛 Troubleshooting
-
-### Login Issues
-
-- Check Firebase credentials in `.env.local`
-- Ensure admin user exists in Firebase Authentication
-- Clear browser cache and try again
-
-### Images Not Loading
-
-- Verify Firebase Storage bucket permissions
-- Check image upload path in admin panel
-- Ensure CORS is configured in Firebase
-
-### Firestore Errors
-
-- Check collection names match exactly
-- Verify Firestore security rules allow read/write
-- Check network tab in browser DevTools
-
----
-
-## 📝 Available Scripts
+## Available Scripts
 
 ```sh
 npm run dev        # Start development server
 npm run build      # Build for production
 npm run preview    # Preview production build
 npm run lint       # Run ESLint
-npm run type-check # Run TypeScript check
 ```
 
----
+## Key Features
 
-## 📄 License
-
-This project is proprietary and belongs to The New Vision Tuition Center.
-
----
-
-## 👥 Support
-
-For technical support or questions:
-
-- Contact the development team
-- Review the inline code comments
-- Check Firestore console for data issues
-
----
-
-## 🎯 Future Enhancements
-
-- [ ] Email notifications for contact form submissions
-- [ ] SMS integration for student alerts
-- [ ] Payment gateway integration
-- [ ] Student performance tracking
-- [ ] Online class scheduling
-- [ ] Mobile app version
-
----
-
-**Last Updated**: January 19, 2026  
-**Version**: 1.0.0
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Dynamic Content**: All pages fetch live data from Firestore
+- **Real-time Updates**: Changes in admin panel reflect immediately
+- **Responsive Design**: Mobile-first approach
+- **Secure**: Protected admin routes with Firebase Authentication
+- **Performance**: Optimized image loading, skeleton loaders, lazy loading

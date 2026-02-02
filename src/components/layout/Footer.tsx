@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import {
-  GraduationCap,
   Phone,
   Mail,
   MapPin,
@@ -9,8 +8,10 @@ import {
   Instagram,
   Youtube,
   ArrowRight,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -24,7 +25,7 @@ const Footer = () => {
   ];
 
   const courses = [
-    "Mathematics (6-12)",
+    "Mathematics (1-12)",
     "Science (6-10)",
     "Physics (11-12)",
     "Chemistry (11-12)",
@@ -37,10 +38,10 @@ const Footer = () => {
       {/* CTA Section */}
       <div className="container mx-auto px-4">
         <div className="relative -top-10">
-          <div className="bg-secondary/90 backdrop-blur rounded-xl px-6 py-4 shadow-lg">
+          <div className="bg-secondary/90 backdrop-blur rounded-xl px-6 py-4 shadow-lg hover:shadow-xl transition-shadow duration-300 animate-slide-up">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center animate-pulse-scale">
                   <GraduationCap className="w-5 h-5 text-secondary-foreground" />
                 </div>
                 <div>
@@ -55,7 +56,7 @@ const Footer = () => {
               <Button
                 variant="default"
                 size="sm"
-                className="shrink-0 bg-primary hover:bg-primary/90"
+                className="shrink-0 bg-primary hover:bg-primary/90 hover:scale-105 transition-all btn-ripple"
                 asChild
               >
                 <Link
@@ -76,9 +77,11 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center">
-                <GraduationCap className="w-7 h-7 text-secondary-foreground" />
-              </div>
+              <img
+                src={logo}
+                alt="The New Vision Logo"
+                className="w-12 h-12 rounded-xl object-contain bg-white p-1"
+              />
               <div className="flex flex-col">
                 <span className="font-heading font-bold text-xl leading-tight">
                   The New Vision
@@ -96,21 +99,21 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary transition-colors"
+                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary transition-colors"
+                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary transition-colors"
+                className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-secondary hover:scale-110 hover:-translate-y-1 transition-all duration-300"
                 aria-label="YouTube"
               >
                 <Youtube className="w-5 h-5" />

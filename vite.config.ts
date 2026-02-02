@@ -9,7 +9,10 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     hmr: {
       overlay: false,
+      clientPort: 443,
+      protocol: "wss",
     },
+    allowedHosts: ["localhost", ".trycloudflare.com", ".cloudflare.com"],
   },
   plugins: [react()],
   resolve: {

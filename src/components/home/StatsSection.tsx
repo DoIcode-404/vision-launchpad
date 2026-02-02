@@ -32,7 +32,11 @@ const stats = [
   },
 ];
 
-const useCountUp = (end: number, duration: number = 2000, start: boolean = false) => {
+const useCountUp = (
+  end: number,
+  duration: number = 2000,
+  start: boolean = false,
+) => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -44,7 +48,7 @@ const useCountUp = (end: number, duration: number = 2000, start: boolean = false
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
-      
+
       setCount(Math.floor(progress * end));
 
       if (progress < 1) {
@@ -60,18 +64,18 @@ const useCountUp = (end: number, duration: number = 2000, start: boolean = false
   return count;
 };
 
-const StatCard = ({ 
-  icon: Icon, 
-  value, 
-  suffix, 
-  label, 
+const StatCard = ({
+  icon: Icon,
+  value,
+  suffix,
+  label,
   color,
-  isVisible 
-}: { 
-  icon: typeof Users; 
-  value: number; 
-  suffix: string; 
-  label: string; 
+  isVisible,
+}: {
+  icon: typeof Users;
+  value: number;
+  suffix: string;
+  label: string;
   color: string;
   isVisible: boolean;
 }) => {
@@ -79,7 +83,9 @@ const StatCard = ({
 
   return (
     <div className="text-center p-4 md:p-6">
-      <div className={`w-14 h-14 mx-auto mb-3 rounded-full bg-primary-foreground/10 flex items-center justify-center`}>
+      <div
+        className={`w-14 h-14 mx-auto mb-3 rounded-full bg-primary-foreground/10 flex items-center justify-center`}
+      >
         <Icon className={`w-7 h-7 ${color}`} />
       </div>
       <div className="font-heading text-3xl md:text-4xl font-bold text-primary-foreground mb-1">
@@ -102,7 +108,7 @@ const StatsSection = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     if (sectionRef.current) {
@@ -113,7 +119,10 @@ const StatsSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-14 hero-gradient relative overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="py-14 hero-gradient relative overflow-hidden"
+    >
       {/* Decorative Elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-10 left-1/4 w-32 h-32 bg-secondary rounded-full blur-3xl" />
@@ -126,7 +135,8 @@ const StatsSection = () => {
             Our Results Speak for Themselves
           </h2>
           <p className="text-base text-primary-foreground/70 max-w-2xl mx-auto">
-            Join our growing community of successful students achieving their academic goals.
+            Join our growing community of successful students achieving their
+            academic goals.
           </p>
         </div>
 

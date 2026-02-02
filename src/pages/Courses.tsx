@@ -26,7 +26,7 @@ const defaultCourses = [
     id: "1",
     icon: Calculator,
     title: "Mathematics",
-    grades: ["6", "7", "8", "9", "10", "11", "12"],
+    grades: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
     description:
       "Build strong foundations in algebra, geometry, trigonometry, calculus and more with our comprehensive math program.",
     features: [
@@ -171,7 +171,7 @@ const defaultCourses = [
 ];
 
 const categories = ["All", "Core", "Science", "Competitive"];
-const gradeFilters = ["All Grades", "6-10", "11-12"];
+const gradeFilters = ["All Grades", "1-5", "6-10", "11-12"];
 
 interface Course {
   id: string;
@@ -223,7 +223,11 @@ const Courses = () => {
       selectedCategory === "All" || course.category === selectedCategory;
 
     let gradeMatch = true;
-    if (selectedGrade === "6-10") {
+    if (selectedGrade === "1-5") {
+      gradeMatch = course.grades.some((g) =>
+        ["1", "2", "3", "4", "5"].includes(g),
+      );
+    } else if (selectedGrade === "6-10") {
       gradeMatch = course.grades.some((g) =>
         ["6", "7", "8", "9", "10"].includes(g),
       );

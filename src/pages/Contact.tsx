@@ -156,7 +156,7 @@ const Contact = () => {
                 Timings
               </h3>
               <p className="text-muted-foreground text-sm">
-                Mon-Sat: 8AM - 8PM
+                Sun-Fri: 8AM - 8PM
               </p>
             </div>
           </div>

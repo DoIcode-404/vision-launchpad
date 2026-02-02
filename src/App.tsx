@@ -25,6 +25,10 @@ import AdminFaculty from "./pages/admin/AdminFaculty";
 import AdminAnalytics from "./pages/admin/AdminAnalytics";
 import AdminResults from "@/pages/admin/AdminResults";
 import AdminAchievements from "@/pages/admin/AdminAchievements";
+import AdminStudents from "@/pages/admin/AdminStudents";
+import AdminStudentDetails from "@/pages/admin/AdminStudentDetails";
+import AdminFinance from "@/pages/admin/AdminFinance";
+import AdminTransactions from "@/pages/admin/AdminTransactions";
 
 const queryClient = new QueryClient();
 
@@ -61,6 +65,10 @@ const App = () => (
               <Route path="results" element={<AdminResults />} />
               <Route path="achievements" element={<AdminAchievements />} />
               <Route path="analytics" element={<AdminAnalytics />} />
+              <Route path="students" element={<AdminStudents />} />
+              <Route path="students/:id" element={<AdminStudentDetails />} />
+              <Route path="finance" element={<AdminFinance />} />
+              <Route path="transactions" element={<AdminTransactions />} />
             </Route>
 
             {/* 404 Route */}

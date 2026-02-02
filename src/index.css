@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap");
 
 /* The New Vision Tuition Center - Design System
    Colors: Deep Blue, Growth Green, Success Yellow, Off-White
@@ -12,59 +12,80 @@
 @layer base {
   :root {
     /* Core Brand Colors */
-    --background: 210 20% 98%; /* Soft Off-White #F9FAFB */
-    --foreground: 213 56% 14%; /* Deep Blue #0A2540 */
+    --background: 210 40% 96%; /* Soft Background #F1F5F9 */
+    --foreground: 229 84% 5%; /* Dark Text #020617 */
 
     --card: 0 0% 100%;
-    --card-foreground: 213 56% 14%;
+    --card-foreground: 229 84% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 213 56% 14%;
+    --popover-foreground: 229 84% 5%;
 
-    /* Primary: Deep Blue */
-    --primary: 213 72% 15%; /* #0A2540 */
+    /* Primary: Navy */
+    --primary: 210 74% 17%; /* #0B2A4A */
     --primary-foreground: 0 0% 100%;
 
-    /* Secondary: Growth Green */
-    --secondary: 145 79% 42%; /* #1DB954 */
+    /* Secondary: Electric Blue */
+    --secondary: 221 83% 53%; /* #2563EB */
     --secondary-foreground: 0 0% 100%;
 
-    /* Accent: Success Yellow */
-    --accent: 43 91% 49%; /* #F5B700 */
-    --accent-foreground: 213 56% 14%;
+    /* Accent: Orange-Gold */
+    --accent: 27 96% 61%; /* #FB923C */
+    --accent-foreground: 229 84% 5%;
 
-    --muted: 210 20% 96%;
-    --muted-foreground: 213 30% 40%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84% 51%; /* Red Banner #DC2626 */
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 20% 90%;
-    --input: 214 20% 90%;
-    --ring: 145 79% 42%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
 
     --radius: 0.75rem;
 
     /* Custom Education Theme Variables */
-    --success: 145 79% 42%;
+    --success: 142 71% 45%; /* #22C55E */
     --success-foreground: 0 0% 100%;
-    
-    --warning: 43 91% 49%;
-    --warning-foreground: 213 56% 14%;
 
+    --warning: 27 96% 61%;
+    --warning-foreground: 229 84% 5%;
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(213 72% 15%) 0%, hsl(213 56% 25%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(145 79% 42%) 0%, hsl(145 79% 35%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(213 72% 15%) 0%, hsl(213 56% 20%) 50%, hsl(145 50% 25%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 20% 98%) 100%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(210 74% 17%) 0%,
+      hsl(210 74% 27%) 100%
+    );
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(221 83% 53%) 0%,
+      hsl(221 83% 43%) 100%
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(210 74% 17%) 0%,
+      hsl(215 78% 35%) 50%,
+      hsl(221 83% 53%) 100%
+    );
+    --gradient-card: linear-gradient(
+      180deg,
+      hsl(0 0% 100%) 0%,
+      hsl(210 40% 96%) 100%
+    );
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(213 56% 14% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(213 56% 14% / 0.1), 0 2px 4px -2px hsl(213 56% 14% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(213 56% 14% / 0.1), 0 4px 6px -4px hsl(213 56% 14% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(213 56% 14% / 0.1), 0 8px 10px -6px hsl(213 56% 14% / 0.1);
-    --shadow-card: 0 4px 20px -2px hsl(213 56% 14% / 0.08);
-    --shadow-card-hover: 0 12px 30px -4px hsl(213 56% 14% / 0.15);
+    --shadow-sm: 0 1px 2px 0 hsl(229 84% 5% / 0.05);
+    --shadow-md:
+      0 4px 6px -1px hsl(229 84% 5% / 0.1), 0 2px 4px -2px hsl(229 84% 5% / 0.1);
+    --shadow-lg:
+      0 10px 15px -3px hsl(229 84% 5% / 0.1),
+      0 4px 6px -4px hsl(229 84% 5% / 0.1);
+    --shadow-xl:
+      0 20px 25px -5px hsl(229 84% 5% / 0.1),
+      0 8px 10px -6px hsl(229 84% 5% / 0.1);
+    --shadow-card: 0 4px 20px -2px hsl(229 84% 5% / 0.08);
+    --shadow-card-hover: 0 12px 30px -4px hsl(229 84% 5% / 0.15);
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -77,33 +98,33 @@
   }
 
   .dark {
-    --background: 213 56% 10%;
-    --foreground: 210 20% 98%;
+    --background: 229 84% 5%;
+    --foreground: 210 40% 96%;
 
-    --card: 213 56% 14%;
-    --card-foreground: 210 20% 98%;
+    --card: 210 74% 12%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 213 56% 14%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 210 74% 12%;
+    --popover-foreground: 210 40% 96%;
 
-    --primary: 145 79% 42%;
+    --primary: 221 83% 53%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 213 72% 25%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 210 74% 27%;
+    --secondary-foreground: 210 40% 96%;
 
-    --accent: 43 91% 49%;
-    --accent-foreground: 213 56% 14%;
+    --accent: 27 96% 61%;
+    --accent-foreground: 229 84% 5%;
 
-    --muted: 213 40% 20%;
-    --muted-foreground: 210 20% 70%;
+    --muted: 222 47% 20%;
+    --muted-foreground: 210 40% 70%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 51%;
+    --destructive-foreground: 210 40% 96%;
 
-    --border: 213 40% 20%;
-    --input: 213 40% 20%;
-    --ring: 145 79% 42%;
+    --border: 210 74% 20%;
+    --input: 210 74% 20%;
+    --ring: 221 83% 53%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -127,11 +148,16 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Poppins", sans-serif;
     @apply font-semibold tracking-tight;
   }
 }
@@ -143,7 +169,12 @@
   }
 
   .hero-text-gradient {
-    background: linear-gradient(135deg, hsl(145 79% 42%) 0%, hsl(43 91% 49%) 100%);
+    background: linear-gradient(
+      120deg,
+      hsl(221 83% 53%) 0%,
+      hsl(221 83% 58%) 30%,
+      hsl(27 96% 61%) 100%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -182,7 +213,7 @@
 
   /* Announcement Banner */
   .announcement-banner {
-    background: linear-gradient(90deg, hsl(145 79% 42%) 0%, hsl(145 79% 35%) 100%);
+    background: linear-gradient(90deg, hsl(0 84% 51%) 0%, hsl(0 84% 45%) 100%);
     @apply text-white py-2 px-4 text-center text-sm font-medium;
   }
 
@@ -193,11 +224,12 @@
   }
 
   @keyframes pulse-green {
-    0%, 100% {
-      box-shadow: 0 0 0 0 hsl(145 79% 42% / 0.7);
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 hsl(142 71% 45% / 0.7);
     }
     70% {
-      box-shadow: 0 0 0 15px hsl(145 79% 42% / 0);
+      box-shadow: 0 0 0 15px hsl(142 71% 45% / 0);
     }
   }
 
@@ -212,7 +244,7 @@
   }
 
   .nav-link::after {
-    content: '';
+    content: "";
     @apply absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-300;
   }
 
@@ -264,59 +296,461 @@
     animation: scaleIn 0.4s ease-out forwards;
   }
 
+  .animate-bounce-in {
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+
+  .animate-rotate-in {
+    animation: rotateIn 0.5s ease-out forwards;
+  }
+
+  .animate-blur-in {
+    animation: blurIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up-fade {
+    animation: slideUpFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-pop {
+    animation: pop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 0.5s ease-in-out;
+  }
+
+  .animate-pulse-scale {
+    animation: pulseScale 2s ease-in-out infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    background-size: 200% 100%;
+  }
+
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes slideUp {
-    from { 
-      opacity: 0; 
-      transform: translateY(30px); 
+    from {
+      opacity: 0;
+      transform: translateY(30px);
     }
-    to { 
-      opacity: 1; 
-      transform: translateY(0); 
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
   @keyframes slideInLeft {
-    from { 
-      opacity: 0; 
-      transform: translateX(-30px); 
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
     }
-    to { 
-      opacity: 1; 
-      transform: translateX(0); 
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 
   @keyframes slideInRight {
-    from { 
-      opacity: 0; 
-      transform: translateX(30px); 
+    from {
+      opacity: 0;
+      transform: translateX(30px);
     }
-    to { 
-      opacity: 1; 
-      transform: translateX(0); 
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
   }
 
   @keyframes scaleIn {
-    from { 
-      opacity: 0; 
-      transform: scale(0.9); 
+    from {
+      opacity: 0;
+      transform: scale(0.9);
     }
-    to { 
-      opacity: 1; 
-      transform: scale(1); 
+    to {
+      opacity: 1;
+      transform: scale(1);
     }
   }
 
+  @keyframes bounceIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes rotateIn {
+    from {
+      opacity: 0;
+      transform: rotate(-10deg) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: rotate(0) scale(1);
+    }
+  }
+
+  @keyframes blurIn {
+    from {
+      opacity: 0;
+      filter: blur(10px);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  @keyframes slideUpFade {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-5deg);
+    }
+    75% {
+      transform: rotate(5deg);
+    }
+  }
+
+  @keyframes pulseScale {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-18px);
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      box-shadow: 0 0 5px hsl(221 83% 53% / 0.5);
+    }
+    50% {
+      box-shadow:
+        0 0 20px hsl(221 83% 53% / 0.8),
+        0 0 30px hsl(221 83% 53% / 0.4);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+
   /* Stagger Animation Delays */
-  .delay-100 { animation-delay: 100ms; }
-  .delay-200 { animation-delay: 200ms; }
-  .delay-300 { animation-delay: 300ms; }
-  .delay-400 { animation-delay: 400ms; }
-  .delay-500 { animation-delay: 500ms; }
+  .delay-100 {
+    animation-delay: 100ms;
+  }
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+  .delay-600 {
+    animation-delay: 600ms;
+  }
+  .delay-700 {
+    animation-delay: 700ms;
+  }
+  .delay-800 {
+    animation-delay: 800ms;
+  }
+
+  /* Hover animations */
+  .hover-lift {
+    @apply transition-all duration-300;
+  }
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px -10px hsl(229 84% 5% / 0.15);
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300;
+  }
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300;
+  }
+  .hover-glow:hover {
+    box-shadow: 0 0 30px hsl(221 83% 53% / 0.3);
+  }
+
+  .hover-rotate {
+    @apply transition-transform duration-300;
+  }
+  .hover-rotate:hover {
+    transform: rotate(5deg);
+  }
+
+  /* Scroll reveal - initial state */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scroll-reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .scroll-reveal-scale {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .scroll-reveal-scale.revealed {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Text gradient animation */
+  .text-gradient-animate {
+    background: linear-gradient(
+      90deg,
+      hsl(221 83% 53%) 0%,
+      hsl(27 96% 61%) 50%,
+      hsl(221 83% 53%) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradient 3s linear infinite;
+  }
+
+  @keyframes textGradient {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+
+  /* Button ripple effect */
+  .btn-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-ripple::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition:
+      transform 0.5s,
+      opacity 0.5s;
+  }
+
+  .btn-ripple:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+  }
+
+  /* Card 3D hover effect */
+  .card-3d {
+    transition: transform 0.3s ease;
+    transform-style: preserve-3d;
+  }
+
+  .card-3d:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(10px);
+  }
+
+  /* Underline animation */
+  .underline-animate {
+    position: relative;
+  }
+
+  .underline-animate::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 50%;
+    background: hsl(221 83% 53%);
+    transition: all 0.3s ease;
+  }
+
+  .underline-animate:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  /* Loading skeleton animation */
+  .skeleton-loading {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 0%,
+      hsl(var(--muted-foreground) / 0.1) 50%,
+      hsl(var(--muted)) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton 1.5s ease-in-out infinite;
+  }
+
+  @keyframes skeleton {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Icon bounce on hover */
+  .icon-bounce:hover {
+    animation: iconBounce 0.5s ease;
+  }
+
+  @keyframes iconBounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    25% {
+      transform: translateY(-6px);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    75% {
+      transform: translateY(-3px);
+    }
+  }
+
+  /* Spin slow for decorative elements */
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }

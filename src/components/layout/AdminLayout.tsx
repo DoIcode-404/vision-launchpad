@@ -13,6 +13,9 @@ import {
   LogOut,
   Menu,
   X,
+  GraduationCap,
+  DollarSign,
+  Receipt,
 } from "lucide-react";
 
 const AdminLayout = () => {
@@ -26,6 +29,21 @@ const AdminLayout = () => {
       label: "Dashboard",
       icon: LayoutDashboard,
       href: "/admin/dashboard",
+    },
+    {
+      label: "Students",
+      icon: GraduationCap,
+      href: "/admin/students",
+    },
+    {
+      label: "Finance",
+      icon: DollarSign,
+      href: "/admin/finance",
+    },
+    {
+      label: "Transactions",
+      icon: Receipt,
+      href: "/admin/transactions",
     },
     {
       label: "Contacts",
