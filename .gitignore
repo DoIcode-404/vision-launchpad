@@ -56,3 +56,7 @@ Thumbs.db
 .cache
 .temp
 .tmp
+
+# Development tools
+cloudflared.exe
+*.exe
