@@ -28,7 +28,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, []);
 
   const fetchStats = async () => {
@@ -160,7 +160,7 @@ const AdminDashboard = () => {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
         <p className="text-gray-600 mt-1">
-          Welcome to Vision Launchpad Admin Panel
+          Welcome to New Vision Tuition Centre Admin Panel
         </p>
       </div>
 

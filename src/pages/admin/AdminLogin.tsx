@@ -43,7 +43,7 @@ const AdminLogin = () => {
           </div>
           <CardTitle className="text-center text-2xl">Admin Login</CardTitle>
           <CardDescription className="text-center">
-            Sign in to access the Vision Launchpad admin panel
+            Sign in to access the New Vision Tuition Centre admin panel
           </CardDescription>
         </CardHeader>
 
