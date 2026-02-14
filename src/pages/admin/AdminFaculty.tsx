@@ -122,7 +122,8 @@ const AdminFaculty = () => {
         }
       }
 
-      const facultyData = {
+      // Build facultyData and remove undefined fields
+      const facultyDataRaw = {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -133,6 +134,10 @@ const AdminFaculty = () => {
         imageUrl: imageUrl || undefined,
         imagePath: imagePath || undefined,
       };
+      // Remove undefined fields
+      const facultyData = Object.fromEntries(
+        Object.entries(facultyDataRaw).filter(([_, v]) => v !== undefined),
+      );
 
       if (editingFaculty) {
         await updateDoc(doc(db, "faculty", editingFaculty.id), facultyData);

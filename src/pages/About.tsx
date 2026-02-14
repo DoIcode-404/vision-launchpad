@@ -23,6 +23,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState, useRef } from "react";
+import AchyutImg from "@/assets/achyut.jpg";
+import PuspaImg from "@/assets/puspa.jpg";
+import YadavImg from "@/assets/yadav.jpeg";
 
 const leadershipMembers = [
   {
@@ -36,6 +39,7 @@ const leadershipMembers = [
       "Every student has unique potential waiting to be unlocked. Our approach focuses on conceptual clarity and practical understanding. Over the years, I've witnessed countless students transform from hesitant learners to confident achievers through personalized attention and genuine care.",
     gradient: "from-primary via-secondary to-accent",
     icon: Brain,
+    image: AchyutImg,
   },
   {
     name: "Puspa Bastola",
@@ -48,18 +52,20 @@ const leadershipMembers = [
       "Our vision has always been to create an inclusive learning environment where students feel valued and inspired. We don't just teach subjects; we nurture curiosity, build critical thinking skills, and instill confidence. Seeing our students succeed brings us immense satisfaction.",
     gradient: "from-secondary via-accent to-primary",
     icon: Heart,
+    image: PuspaImg,
   },
   {
-    name: "Faculty Team",
-    role: "Senior Teaching Staff",
+    name: "Harischandra Yadav",
+    role: "Founder and Director",
     specialization: "Multi-disciplinary Excellence",
-    experience: "Collective Expertise",
+    experience: "10+ Years",
     quote:
       "There are no weak students, only different learning styles waiting to be discovered.",
     message:
       "Our small batch sizes allow personalized attention for each student. We track progress closely, identify struggles early, and provide targeted support. Through interactive sessions and continuous feedback, we make learning engaging and exam preparation effective.",
     gradient: "from-accent via-primary to-secondary",
     icon: Users,
+    image: YadavImg,
   },
 ];
 
@@ -458,8 +464,16 @@ const About = () => {
                     >
                       <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
                       <div className="relative z-10 flex items-start gap-6">
-                        <div className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-4xl font-bold flex-shrink-0">
-                          {leader.name.charAt(0)}
+                        <div className="w-24 h-24 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-4xl font-bold flex-shrink-0 overflow-hidden">
+                          {leader.image ? (
+                            <img
+                              src={leader.image}
+                              alt={leader.name}
+                              className="w-full h-full object-cover rounded-2xl"
+                            />
+                          ) : (
+                            leader.name.charAt(0)
+                          )}
                         </div>
                         <div className="flex-1">
                           <h3 className="font-heading text-2xl md:text-3xl font-bold mb-2">
